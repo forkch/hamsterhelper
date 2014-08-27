@@ -4,21 +4,21 @@
 
 'use strict';
 
-var thing = require('./thing.model');
+var Hamstergroup = require('./hamstergroup.model');
 
 exports.register = function(socket) {
-  thing.schema.post('save', function (doc) {
+  Hamstergroup.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  thing.schema.post('remove', function (doc) {
+  Hamstergroup.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('thing:save', doc);
+  socket.emit('hamstergroup:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('thing:remove', doc);
+  socket.emit('hamstergroup:remove', doc);
 }
