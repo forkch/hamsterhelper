@@ -1,0 +1,8 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_title_endpoint">Endpoint</string>
+    <string name="pref_default_endpoint">endpoint</string>
+    <string name="pref_default_mockEndpoint">false</string>
+    <string name="pref_title_mockEnpoint">Mock endpoint</string>
+
+</resources>
