@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/cage/cage.socket').register(socket);
   require('../api/hamstergroup/hamstergroup.socket').register(socket);
   require('../api/hamster/hamster.socket').register(socket);
 }

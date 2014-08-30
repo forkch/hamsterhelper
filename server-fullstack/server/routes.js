@@ -9,6 +9,7 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/cages', require('./api/cage'));
   app.use('/api/hamstergroups', require('./api/hamstergroup'));
   app.use('/api/hamsters', require('./api/hamster'));
   app.use('/api/users', require('./api/user'));

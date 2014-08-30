@@ -5,8 +5,9 @@ var mongoose = require('mongoose'),
 
 var HamsterSchema = new Schema({
   name: String,
-  info: String,
-  active: Boolean
+  male: Boolean,
+  gencode: String,
+
 });
 
 module.exports = mongoose.model('Hamster', HamsterSchema);
