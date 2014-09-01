@@ -1,56 +1,43 @@
 package ch.furrylittlefriends.hamsterhelper.activities;
 
-import android.app.Activity;
-import android.app.ListActivity;
 import android.content.SharedPreferences;
-import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import ch.furrylittlefriends.hamsterhelper.HamsterHelperApplication;
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.adapters.HamsterListAdapter;
-import ch.furrylittlefriends.hamsterhelper.fragments.SettingsFragment;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.modules.HamsterListModule;
+import ch.furrylittlefriends.hamsterhelper.presenters.HamsterListPresenter;
 import ch.furrylittlefriends.hamsterhelper.services.HamsterService;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rx.functions.Action1;
 
 public class HamsterListActivity extends BaseListActivity {
 
     public static final String TAG = HamsterListActivity.class.getSimpleName();
+
+    @Inject
+    HamsterListPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hamster_list);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String endpoint = preferences.getString(SettingsActivity.KEY_ENDPOINT, "http://10.0.2.2:9000");
-
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
-
-        HamsterService hamsterService = restAdapter.create(HamsterService.class);
-
-        hamsterService.getAllHamsters(new Callback<List<Hamster>>() {
-            @Override
-            public void success(List<Hamster> hamsters, Response response) {
-                        setListAdapter(new HamsterListAdapter(HamsterListActivity.this, hamsters));
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                        Log.e(TAG, error.getMessage());
-            }
-        });
-
-
+        ((HamsterHelperApplication)getApplication()).createScopedGraphAndInject(this, new HamsterListModule(this));
+        presenter.loadHamsters();
 
     }
 

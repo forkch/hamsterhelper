@@ -14,8 +14,6 @@ public abstract class BaseListActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HamsterHelperApplication hamsterHelperApplication = (HamsterHelperApplication) getApplication();
-        hamsterHelperApplication.inject(this);
     }
 
 }
