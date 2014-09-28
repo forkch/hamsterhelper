@@ -1,30 +1,22 @@
 package ch.furrylittlefriends.hamsterhelper.modules;
 
-import javax.inject.Inject;
+import com.squareup.otto.Bus;
 
-import ch.furrylittlefriends.hamsterhelper.HamsterHelperApplication;
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterListInteractor;
+import javax.inject.Singleton;
+
+import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by fork on 01.09.14.
+ * Created by fork on 27.09.14.
  */
-@Module(injects = {},
-        library = true)
+@Module(complete=false,library = true)
 public class InteractorsModule {
 
-    private HamsterHelperApplication hamsterHelperApplication;
-
-    public InteractorsModule(HamsterHelperApplication hamsterHelperApplication) {
-
-        this.hamsterHelperApplication = hamsterHelperApplication;
-    }
-
-
     @Provides
-    public HamsterListInteractor provideHamsterListInteractor() {
-        return new HamsterListInteractor(hamsterHelperApplication.getEndpoint());
+    @Singleton
+    public HamsterApiInteractor provideHamsterListInteractor(Bus bus) {
+        return new HamsterApiInteractor(bus);
     }
-
 }

@@ -2,17 +2,19 @@ package ch.furrylittlefriends.hamsterhelper;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 
 import com.squareup.otto.Bus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import ch.furrylittlefriends.hamsterhelper.activities.SettingsActivity;
-import ch.furrylittlefriends.hamsterhelper.modules.InteractorsModule;
+import ch.furrylittlefriends.hamsterhelper.ui.SettingsActivity;
+import ch.furrylittlefriends.hamsterhelper.modules.HamsterHelperModule;
 import dagger.ObjectGraph;
 
 /**
@@ -29,7 +31,7 @@ public class HamsterHelperApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //setupStrictModePolicies();
+        setupStrictModePolicies();
 
         setupDagger();
 
@@ -38,6 +40,13 @@ public class HamsterHelperApplication extends Application {
 
     }
 
+
+    private void setupStrictModePolicies() {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectNetwork().detectCustomSlowCalls().detectDiskReads().detectDiskWrites().penaltyLog().penaltyDeath().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectActivityLeaks()
+                .penaltyLog().build());
+    }
     public <T> T inject(T obj) {
         return objectGraph.inject(obj);
     }
@@ -50,6 +59,7 @@ public class HamsterHelperApplication extends Application {
         createScopedGraph(modules).inject(obj);
     }
 
+
     protected void setupDagger() {
         Object[] modules = getModules().toArray();
         objectGraph = ObjectGraph.create(modules);
@@ -59,8 +69,18 @@ public class HamsterHelperApplication extends Application {
 
     protected List<Object> getModules() {
         return Arrays.<Object>asList(
-                new HamsterHelperModule(this), new InteractorsModule(this)
+                new HamsterHelperModule(this)
         );
+    }
+
+
+    protected List<Object> getModules( Object... addidtionalModules) {
+        List<Object> modules = new ArrayList<Object>();
+
+        modules.addAll(Arrays.<Object>asList(
+                new HamsterHelperModule(this)));
+        modules.addAll(Arrays.<Object>asList(addidtionalModules));
+        return modules;
     }
 
 

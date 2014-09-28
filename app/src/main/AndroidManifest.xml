@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.furrylittlefriends.hamsterhelper">
+    package="ch.furrylittlefriends.hamsterhelper" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".HamsterHelperApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".activities.HamsterListActivity"
-            android:label="@string/title_activity_hamster_list">
+            android:name=".ui.hamsterlist.HamsterListActivity"
+            android:label="@string/title_activity_hamster_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.addhamster.AddHamsterActivity"
+            android:label="@string/title_activity_add_hamster"
+            android:parentActivityName=".ui.hamsterlist.HamsterListActivity"
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.furrylittlefriends.hamsterhelper.activities.HamsterListActivity" />
         </activity>
     </application>
 

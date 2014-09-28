@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="hamster_image_placeholder">#8B4513</color>
+    <color name="add_hamster_picture_button_color">#8B4513</color>
+    <color name="add_hamster_picture_button_color_light">#ffc15116</color>
+</resources>

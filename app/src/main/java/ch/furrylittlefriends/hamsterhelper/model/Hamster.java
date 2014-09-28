@@ -20,6 +20,7 @@ public class Hamster {
     @SerializedName("__v")
     @Expose
     private int v;
+    private int weight;
 
     public String getName() {
         return name;
@@ -84,5 +85,13 @@ public class Hamster {
     public Hamster withGencode(String gencode) {
         this.gencode = gencode;
         return this;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 }

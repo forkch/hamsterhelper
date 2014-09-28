@@ -27,6 +27,10 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
         this.hamsterList = hamsterList;
     }
 
+    @Override
+    public int getCount() {
+        return super.getCount();
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -39,4 +43,5 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
 
         return rowView;
     }
+
 }

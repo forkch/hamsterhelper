@@ -2,8 +2,20 @@
 <resources>
 
     <string name="app_name">Hamster Helper</string>
-    <string name="title_activity_hamster_list">HamsterListActivity</string>
+    <string name="title_activity_hamster_list">Hamsterhelper</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="title_activity_add_hamster">AddHamsterActivity</string>
 
+    <string-array name="gencodeEntries">
+        <item>AA</item>
+        <item>Ad</item>
+        <item>dd</item>
+        <item>AA Pepe</item>
+        <item>Ad Pepe</item>
+        <item>dd Pepe</item>
+    </string-array>
 </resources>

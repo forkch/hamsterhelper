@@ -4,7 +4,9 @@ import java.util.List;
 
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import rx.Observable;
 
 /**
@@ -16,8 +18,9 @@ public interface HamsterService {
     public void getAllHamsters(Callback<List<Hamster>> cb );
 
     @GET("/api/hamsters")
-    public List<Hamster> getAllHamsters();
+    public Observable<List<Hamster>> getAllHamstersObs();
 
 
-
+    @POST("/api/hamsters")
+    public void addHamster(@Body Hamster hamster, Callback<Hamster> cb);
 }

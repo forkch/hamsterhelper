@@ -1,4 +1,4 @@
-package ch.furrylittlefriends.hamsterhelper.activities;
+package ch.furrylittlefriends.hamsterhelper.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import ch.furrylittlefriends.hamsterhelper.HamsterHelperApplication;
 /**
  * Created by fork on 30.05.14.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity implements HamsterActivity {
 
     @Inject
     Bus bus;
@@ -33,5 +33,10 @@ public abstract class BaseActivity extends Activity {
     protected void onResume() {
         super.onResume();
         bus.register(this);
+    }
+
+    @Override
+    public HamsterHelperApplication getMyApplication() {
+        return ((HamsterHelperApplication)getApplication());
     }
 }

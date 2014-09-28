@@ -1,18 +1,14 @@
-package ch.furrylittlefriends.hamsterhelper;
+package ch.furrylittlefriends.hamsterhelper.modules;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.squareup.otto.Bus;
-import com.squareup.otto.ThreadEnforcer;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
-import ch.furrylittlefriends.hamsterhelper.activities.HamsterListActivity;
-import ch.furrylittlefriends.hamsterhelper.activities.SettingsActivity;
-import ch.furrylittlefriends.hamsterhelper.modules.InteractorsModule;
+import ch.furrylittlefriends.hamsterhelper.HamsterHelperApplication;
+import ch.furrylittlefriends.hamsterhelper.ui.SettingsActivity;
+import ch.furrylittlefriends.hamsterhelper.bus.MainThreadBus;
 import dagger.Module;
 import dagger.Provides;
 
@@ -23,6 +19,7 @@ import dagger.Provides;
 @Module(
         injects = {HamsterHelperApplication.class,
                 SettingsActivity.class},
+        library = true,
         includes = InteractorsModule.class
 
 )
@@ -31,7 +28,7 @@ public class HamsterHelperModule {
     private final Context context;
     private HamsterHelperApplication hamsterHelperApplication;
 
-    HamsterHelperModule(HamsterHelperApplication hamsterHelperApplication) {
+    public HamsterHelperModule(HamsterHelperApplication hamsterHelperApplication) {
         this.hamsterHelperApplication = hamsterHelperApplication;
         this.context = hamsterHelperApplication.getApplicationContext();
     }
@@ -41,11 +38,10 @@ public class HamsterHelperModule {
         return this.hamsterHelperApplication;
     }
 
-
     @Provides
     @Singleton
-    public Bus providesEventBus() {
-        return new Bus(ThreadEnforcer.ANY);
+    public Bus providesEventBusread() {
+        return new MainThreadBus();
     }
 
 }

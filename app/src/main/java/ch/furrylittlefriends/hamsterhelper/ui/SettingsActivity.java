@@ -1,4 +1,4 @@
-package ch.furrylittlefriends.hamsterhelper.activities;
+package ch.furrylittlefriends.hamsterhelper.ui;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
