@@ -1,45 +1,49 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding"
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    android:background="?android:attr/windowBackground">
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:id="@+id/hamsterImage"
-            android:background="@drawable/hamster_image"
-            android:scaleType="centerCrop" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:padding="@dimen/layout_padding">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/hamsterName"
+        android:hint="Hamstername"
+        android:singleLine="true"
+        android:padding="5dp"
+        android:textSize="@dimen/large_textsize" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/hamsterName"
-                android:hint="Hamstername"
-                android:singleLine="true"
-                android:padding="5dp"
-                android:textSize="@dimen/large_textsize" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Male"
+        android:id="@+id/isMale"
+        android:textSize="@dimen/medium_textsize"
+        android:padding="10dp" />
 
-            <CheckBox
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+
+        <TableRow>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Male"
-                android:id="@+id/isMale"
+                android:text="@string/birthday_label"
                 android:textSize="@dimen/medium_textsize"
-                android:padding="10dp" />
+                android:layout_gravity="center_vertical"
+                android:textAlignment="inherit"
+                android:layout_marginRight="@dimen/margin_small" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -48,88 +52,88 @@
                 android:textSize="@dimen/medium_textsize"
                 android:id="@+id/birthdaySpinner"
                 style="?android:attr/spinnerStyle"
-                tools:text="Birthday: 31. October 2012" />
+                tools:text="31. October 2012"
+                android:layout_weight="1" />
+        </TableRow>
 
+        <TableRow>
 
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                android:text="@string/gencode_label"
+                android:textSize="@dimen/medium_textsize"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="inherit"
+                android:layout_marginRight="@dimen/margin_small" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/gencode_label"
-                    android:textSize="@dimen/medium_textsize"
-                    android:layout_gravity="center_vertical"
-                    android:textAlignment="inherit" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gencodeSpinner"
+                android:layout_weight="1" />
 
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/gencodeSpinner"
-                    android:layout_weight="1" />
-            </LinearLayout>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weight_label"
+                android:textSize="@dimen/medium_textsize"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="inherit"
+                android:layout_marginRight="@dimen/margin_small" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/medium_textsize"
                 android:text="@string/weight_label"
-                tools:text="Weight: 40g"
+                tools:text="40g"
                 android:id="@+id/weightTextView"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 style="?android:attr/spinnerStyle" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/default_divider_color_light"
-                android:layout_marginTop="12dp"/>
+        </TableRow>
+    </TableLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cancel"
-                    android:layout_weight="1"
-                    android:id="@+id/cancel"
-                    android:layout_gravity="right|bottom"
-                    android:background="@null" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/default_divider_color_light"
+        android:layout_marginTop="12dp" />
 
-                <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/default_divider_color_light"
-                    android:layout_margin="@dimen/margin_small" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Save"
-                    android:layout_weight="1"
-                    android:id="@+id/save"
-                    android:layout_gravity="right|bottom"
-                    android:background="@null" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Cancel"
+            android:layout_weight="1"
+            android:id="@+id/cancel"
+            android:layout_gravity="right|bottom"
+            android:background="@null" />
 
-            </LinearLayout>
-        </LinearLayout>
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/default_divider_color_light"
+            android:layout_margin="@dimen/margin_small" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Save"
+            android:layout_weight="1"
+            android:id="@+id/save"
+            android:layout_gravity="right|bottom"
+            android:background="@null" />
 
     </LinearLayout>
-
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/addPicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="115dp"
-        android:layout_marginRight="20dp"
-        android:src="@android:drawable/ic_menu_camera"
-        fab:fab_colorNormal="@color/add_hamster_picture_button_color"
-        fab:fab_colorPressed="@color/add_hamster_picture_button_color_light" />
-</FrameLayout>
+</LinearLayout>

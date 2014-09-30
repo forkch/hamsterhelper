@@ -5,5 +5,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/add_hamster_picture_button_color</item>
+    </style>
+
+    <style name="Widget.ActionBar.Transparent">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 
 </resources>

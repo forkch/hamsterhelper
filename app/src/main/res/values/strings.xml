@@ -16,6 +16,8 @@
     <string name="gencode_label">Gencode:</string>
     <string name="error_hamstername">Invalid name</string>
     <string name="no_birthday_set">no birthday</string>
+    <string name="message_hamster_added">Hamster added</string>
+    <string name="error_birthday">Please enter birthday</string>
 
     <string-array name="gencodeEntries">
         <item>AA</item>

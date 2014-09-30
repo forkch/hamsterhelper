@@ -24,6 +24,8 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
+import rx.Observable;
+import rx.functions.Action1;
 
 /**
  * Created by fork on 01.09.14.
@@ -56,7 +58,7 @@ public class HamsterApiInteractor {
 
     public void getAllHamsters() {
 
-        hamsterService.getAllHamsters(new Callback<List<Hamster>>() {
+        /*hamsterService.getAllHamsters(new Callback<List<Hamster>>() {
             @Override
             public void success(List<Hamster> hamsters, Response response) {
                 bus.post(new
@@ -67,16 +69,16 @@ public class HamsterApiInteractor {
             public void failure(RetrofitError error) {
 
             }
-        });
+        });*/
 
-        /*Observable<List<Hamster>> allHamstersObs = hamsterService.getAllHamstersObs();
+        Observable<List<Hamster>> allHamstersObs = hamsterService.getAllHamstersObs();
         allHamstersObs.subscribe(new Action1<List<Hamster>>() {
             @Override
             public void call(List<Hamster> hamsters) {
                 bus.post(new
                         OnHamstersLoadedEvent(hamsters));
             }
-        });*/
+        });
     }
 
     public void addHamster(Hamster hamster) {

@@ -17,7 +17,7 @@
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".ui.hamsterlist.HamsterListActivity"
-            android:label="@string/title_activity_hamster_list" >
+            android:label="" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,9 +26,10 @@
         </activity>
         <activity
             android:name=".ui.addhamster.AddHamsterActivity"
-            android:label="@string/title_activity_add_hamster"
+            android:label=""
             android:parentActivityName=".ui.hamsterlist.HamsterListActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.furrylittlefriends.hamsterhelper.activities.HamsterListActivity" />
