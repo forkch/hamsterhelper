@@ -37,7 +37,7 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.hamster_list_row, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.label);
+        TextView textView = (TextView) rowView.findViewById(R.id.hamsterName);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         textView.setText(hamsterList.get(position).getName());
 

@@ -3,6 +3,8 @@ package ch.furrylittlefriends.hamsterhelper.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.joda.time.LocalDate;
+
 /**
  * Created by fork on 30.08.14.
  */
@@ -20,7 +22,8 @@ public class Hamster {
     @SerializedName("__v")
     @Expose
     private int v;
-    private int weight;
+    private double weight;
+    private LocalDate birthday;
 
     public String getName() {
         return name;
@@ -87,11 +90,19 @@ public class Hamster {
         return this;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
     }
 }

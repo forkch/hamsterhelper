@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,10 +11,10 @@
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="160dp"
+            android:layout_height="150dp"
             android:id="@+id/hamsterImage"
             android:background="@drawable/hamster_image"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -32,55 +33,91 @@
                 android:padding="5dp"
                 android:textSize="@dimen/large_textsize" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:id="@+id/isMale"
+                android:textSize="@dimen/medium_textsize"
+                android:padding="10dp" />
 
-                <CheckBox
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="@dimen/medium_textsize"
+                android:id="@+id/birthdaySpinner"
+                style="?android:attr/spinnerStyle"
+                tools:text="Birthday: 31. October 2012" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Male"
-                    android:id="@+id/isMale"
-                    android:padding="10dp" />
+                    android:text="@string/gencode_label"
+                    android:textSize="@dimen/medium_textsize"
+                    android:layout_gravity="center_vertical"
+                    android:textAlignment="inherit" />
 
                 <Spinner
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/gencodeSpinner"
                     android:layout_weight="1" />
-
             </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
-                <SeekBar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/weightSeekbar"
-                    android:layout_weight="1"
-                    android:indeterminate="false"
-                    android:max="200" />
+                android:textSize="@dimen/medium_textsize"
+                android:text="@string/weight_label"
+                tools:text="Weight: 40g"
+                android:id="@+id/weightTextView"
+                android:layout_weight="2"
+                style="?android:attr/spinnerStyle" />
 
-                <TextView
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/default_divider_color_light"
+                android:layout_marginTop="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="40g"
-                    android:id="@+id/weightTextView"
-                    android:layout_weight="2" />
+                    android:text="Cancel"
+                    android:layout_weight="1"
+                    android:id="@+id/cancel"
+                    android:layout_gravity="right|bottom"
+                    android:background="@null" />
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/default_divider_color_light"
+                    android:layout_margin="@dimen/margin_small" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:layout_weight="1"
+                    android:id="@+id/save"
+                    android:layout_gravity="right|bottom"
+                    android:background="@null" />
 
             </LinearLayout>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Save"
-                android:id="@+id/save"
-                android:layout_gravity="center_horizontal|bottom" />
         </LinearLayout>
 
     </LinearLayout>

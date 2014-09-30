@@ -9,6 +9,12 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="action_refresh">Refresh</string>
     <string name="title_activity_add_hamster">AddHamsterActivity</string>
+    <string name="birthday_date_format">dd. MMM yyyy</string>
+    <string name="birthday_label">Birthday:</string>
+    <string name="weight_label">Weight:</string>
+    <string name="weight_unit">g</string>
+    <string name="gencode_label">Gencode:</string>
+    <string name="error_hamstername">Invalid name</string>
 
     <string-array name="gencodeEntries">
         <item>AA</item>

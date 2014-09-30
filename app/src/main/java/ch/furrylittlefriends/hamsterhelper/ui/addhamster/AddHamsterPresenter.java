@@ -4,6 +4,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDate;
 
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
@@ -38,14 +39,17 @@ public class AddHamsterPresenter {
         view.onHamsterAdded();
     }
 
-    public void addHamster(String hamsterName, boolean isMale, String gencode, int weight) {
-        if (StringUtils.isBlank(hamsterName))
+    public void addHamster(String hamsterName, boolean isMale, String gencode, double weight, LocalDate selectedBirthday) {
+        if (StringUtils.isBlank(hamsterName)) {
+            view.validateNameFailed();
             return;
+        }
         Hamster hamster = new Hamster();
         hamster.setName(hamsterName);
         hamster.setMale(isMale);
         hamster.setWeight(weight);
         hamster.setGencode(gencode);
+        hamster.setBirthday(selectedBirthday);
         hamsterListInteractor.addHamster(hamster);
     }
 }

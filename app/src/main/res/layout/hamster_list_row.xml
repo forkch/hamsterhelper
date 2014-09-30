@@ -1,25 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="7dp">
+    card_view:cardCornerRadius="4dp">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="120dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="4px"
-        android:layout_marginRight="10px"
-        android:layout_marginTop="4px"
-        android:src="@drawable/ic_launcher" >
-    </ImageView>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@+id/label"
-        android:textSize="40px"></TextView>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hamster_image"/>
+
+            <TextView
+                android:id="@+id/hamsterName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="@dimen/large_textsize"
+                android:background="@drawable/card_title_background"
+                android:textColor="@color/card_title_color"
+                tools:text="Joe" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/hamsterParents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:padding="5dp"
+            android:text="Onyx &amp; Binu (dummy)"
+            android:textSize="@dimen/medium_textsize"
+            tools:text="Onyx &amp; Binu" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
+
+
+            <TextView
+                android:id="@+id/hamsterBirthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:padding="5dp"
+                android:text="21. Oktober 2012 (dummy)"
+                android:textSize="@dimen/medium_textsize"
+                tools:text="21. Oktober 2012"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/ic_menu_edit"
+                android:id="@+id/editHamsterButton"
+                android:layout_weight="0"
+                android:layout_gravity="right" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/ic_menu_delete"
+                android:id="@+id/deleteHamsterButton"
+                android:layout_weight="0"
+                android:layout_gravity="right"
+                android:layout_marginLeft="8dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

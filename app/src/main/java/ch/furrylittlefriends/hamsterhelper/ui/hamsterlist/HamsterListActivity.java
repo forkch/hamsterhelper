@@ -46,10 +46,10 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
         ButterKnife.inject(this);
 
         pullToRefreshLayout.setOnRefreshListener(this);
-        pullToRefreshLayout.setColorScheme(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        pullToRefreshLayout.setColorSchemeResources(R.color.pull_to_refresh_color_1,
+                R.color.pull_to_refresh_color_2,
+                R.color.pull_to_refresh_color_3,
+                R.color.pull_to_refresh_color_4);
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.button_floating_action);
         floatingActionButton.attachToListView(listView);
@@ -92,9 +92,6 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
-        }
-        if (id == R.id.action_refresh) {
-            presenter.loadHamsters();
         }
         return super.onOptionsItemSelected(item);
     }
