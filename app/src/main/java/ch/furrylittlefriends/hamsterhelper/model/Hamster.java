@@ -28,6 +28,15 @@ public class Hamster {
     @Expose
     private DateTime birthday;
 
+    @Expose
+    private String motherId;
+    @Expose
+    private String fatherId;
+
+    private Hamster mother;
+    private Hamster father;
+
+
     public String getName() {
         return name;
     }
@@ -107,5 +116,37 @@ public class Hamster {
 
     public DateTime getBirthday() {
         return birthday;
+    }
+
+    public String getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(String motherId) {
+        this.motherId = motherId;
+    }
+
+    public String getFatherId() {
+        return fatherId;
+    }
+
+    public void setFatherId(String fatherId) {
+        this.fatherId = fatherId;
+    }
+
+    public Hamster getMother() {
+        return mother;
+    }
+
+    public void setMother(Hamster mother) {
+        this.mother = mother;
+    }
+
+    public Hamster getFather() {
+        return father;
+    }
+
+    public void setFather(Hamster father) {
+        this.father = father;
     }
 }

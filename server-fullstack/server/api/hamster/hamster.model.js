@@ -8,8 +8,9 @@ var HamsterSchema = new Schema({
   male: Boolean,
   gencode: String,
   hamsterImage: String,
-  birthday: Date
-
+  birthday: Date,
+  motherId: {type: Schema.ObjectId, ref: 'Hamster'},
+  fatherId: {type: Schema.ObjectId, ref: 'Hamster'}
 });
 
 module.exports = mongoose.model('Hamster', HamsterSchema);

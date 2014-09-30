@@ -51,8 +51,16 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
         TextView nameTextView = (TextView) rowView.findViewById(R.id.hamsterName);
         TextView birthdayTextview= (TextView) rowView.findViewById(R.id.hamsterBirthday);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+        TextView parents = (TextView) rowView.findViewById(R.id.hamsterParents);
         Hamster hamster = hamsterList.get(position);
         nameTextView.setText(hamster.getName());
+
+        if(hamster.getMother() != null && hamster.getFather() != null) {
+            parents.setText(hamster.getMother().getName() + " & " + hamster.getFather().getName());
+        }else {
+            parents.setText(context.getString(R.string.not_available));
+        }
+
         LocalDate birthday = hamster.getBirthday().toLocalDate();
         if(birthday != null) {
             birthdayTextview.setText(context.getString(R.string.birthday_label) + " " + birthday.toString(dateTimeFormatter));

@@ -9,6 +9,8 @@ var User = require('../api/user/user.model');
 var Hamster = require('../api/hamster/hamster.model');
 var HamsterGroup = require('../api/hamstergroup/hamstergroup.model');
 
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
 
 User.find({}).remove(function () {
   User.create({
@@ -28,11 +30,25 @@ User.find({}).remove(function () {
   );
 });
 
+var idBinu = mongoose.Types.ObjectId();
+var idOnyx = mongoose.Types.ObjectId();
 Hamster.find({}).remove(function () {
   Hamster.create({
-    name: 'Joe',
+    _id: idOnyx,
+    name: 'Onyx',
+    male: false,
+    birthday: new Date
+  }, {
+    _id: idBinu,
+    name: 'Binu',
     male: true,
     birthday: new Date
+  }, {
+    name: 'Joe',
+    male: true,
+    birthday: new Date,
+    motherId: idOnyx,
+    fatherId: idBinu
   }, {
     name: 'Devon',
     male: true,
@@ -55,6 +71,7 @@ Hamster.find({}).remove(function () {
     birthday: new Date
   }, function () {
     console.log('finished populating hamsters');
+
     HamsterGroup.find({}).remove(function () {
       HamsterGroup.create({
         name: 'Ben'
