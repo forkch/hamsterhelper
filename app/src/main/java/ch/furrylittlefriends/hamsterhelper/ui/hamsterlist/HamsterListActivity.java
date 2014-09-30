@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ch.furrylittlefriends.hamsterhelper.R;
+import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.BaseListActivity;
 import ch.furrylittlefriends.hamsterhelper.modules.HamsterListModule;
@@ -35,6 +37,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
 
     @InjectView(R.id.swipeToRefreshLayout)
     SwipeRefreshLayout pullToRefreshLayout;
+    private FloatingActionButton floatingActionButton;
 
 
     @Override
@@ -51,7 +54,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
                 R.color.pull_to_refresh_color_3,
                 R.color.pull_to_refresh_color_4);
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.button_floating_action);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.button_floating_action);
         floatingActionButton.attachToListView(listView);
 
     }
@@ -79,16 +82,12 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.hamster_list, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
@@ -98,9 +97,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
 
     @Override
     public void onRefresh() {
-
         presenter.loadHamsters();
-
     }
 
     public void onHamstersLoaded() {
@@ -110,5 +107,16 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
                 pullToRefreshLayout.setRefreshing(false);
             }
         }, 1000);
+
+    }
+
+    public void ensureAddButtonVisibility() {
+        if(listView.getCount() == 0) {
+            floatingActionButton.show();
+        }
+    }
+
+    public int getPositionForView(View v) {
+        return listView.getPositionForView(v);
     }
 }

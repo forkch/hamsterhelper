@@ -1,10 +1,11 @@
-package ch.furrylittlefriends.hamsterhelper.adapters;
+package ch.furrylittlefriends.hamsterhelper.ui.hamsterlist;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
+import butterknife.OnClick;
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
@@ -24,13 +26,15 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
 
     private Context context;
     private List<Hamster> hamsterList;
+    private final OnDelteButtonListener deleteButtonListener;
     private final DateTimeFormatter dateTimeFormatter;
 
 
-    public HamsterListAdapter(Context context, List<Hamster> hamsterList) {
+    public HamsterListAdapter(Context context, List<Hamster> hamsterList, OnDelteButtonListener deleteButtonListener) {
         super(context, R.layout.hamster_list_row, hamsterList);
         this.context = context;
         this.hamsterList = hamsterList;
+        this.deleteButtonListener = deleteButtonListener;
         dateTimeFormatter = DateTimeFormat.forPattern(context.getString(R.string.birthday_date_format));
     }
 
@@ -56,7 +60,20 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
             birthdayTextview.setText(context.getString(R.string.no_birthday_set));
         }
 
+
+        ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.deleteHamsterButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteButtonListener.onDelete(view);
+            }
+        });
+
+
         return rowView;
     }
 
+    public interface OnDelteButtonListener {
+        public void onDelete(View view);
+    }
 }

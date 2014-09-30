@@ -18,6 +18,9 @@
     <string name="no_birthday_set">no birthday</string>
     <string name="message_hamster_added">Hamster added</string>
     <string name="error_birthday">Please enter birthday</string>
+    <string name="mother_label">Mother:</string>
+    <string name="father_label">Father:</string>
+    <string name="hint_name">Name</string>
 
     <string-array name="gencodeEntries">
         <item>AA</item>

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/layout_padding"
-
     android:background="?android:attr/windowBackground">
 
 
@@ -14,18 +13,10 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/hamsterName"
-        android:hint="Hamstername"
+        android:hint="@string/hint_name"
         android:singleLine="true"
         android:padding="5dp"
         android:textSize="@dimen/large_textsize" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Male"
-        android:id="@+id/isMale"
-        android:textSize="@dimen/medium_textsize"
-        android:padding="10dp" />
 
 
     <TableLayout
@@ -33,6 +24,51 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mother_label"
+                android:textSize="@dimen/medium_textsize"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="inherit"
+                android:layout_marginRight="@dimen/margin_small" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/motherSpinner"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/father_label"
+                android:textSize="@dimen/medium_textsize"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="inherit"
+                android:layout_marginRight="@dimen/margin_small" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fatherSpinner"
+                android:layout_weight="1" /></TableRow>
+
+        <TableRow>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:id="@+id/isMale"
+                android:textSize="@dimen/medium_textsize"
+                android:padding="10dp" />
+        </TableRow>
 
         <TableRow>
 

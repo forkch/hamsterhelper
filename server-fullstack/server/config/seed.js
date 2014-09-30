@@ -41,6 +41,18 @@ Hamster.find({}).remove(function () {
     name: 'Athena',
     male: false,
     birthday: new Date
+  }, {
+    name: 'Mio',
+    male: true,
+    birthday: new Date
+  }, {
+    name: 'Pipi',
+    male: false,
+    birthday: new Date
+  }, {
+    name: 'Yasur',
+    male: true,
+    birthday: new Date
   }, function () {
     console.log('finished populating hamsters');
     HamsterGroup.find({}).remove(function () {

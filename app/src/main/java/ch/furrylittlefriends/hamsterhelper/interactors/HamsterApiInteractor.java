@@ -15,6 +15,7 @@ import java.util.List;
 
 import ch.furrylittlefriends.hamsterhelper.BuildConfig;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
+import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.services.HamsterService;
@@ -94,5 +95,21 @@ public class HamsterApiInteractor {
             }
         });
 
+    }
+
+    public void deleteHamster(final Hamster hamster) {
+        hamsterService.deleteHamster(hamster.getId(), new Callback<Void>() {
+            @Override
+            public void success(Void aVoid, Response response) {
+                Log.i(TAG, "deleted hamster");
+                bus.post(new HamsterDeletedEvent(hamster));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Log.i(TAG, "failed to delete hamster");
+            }
+        });
     }
 }
