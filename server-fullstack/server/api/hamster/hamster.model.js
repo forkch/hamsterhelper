@@ -8,7 +8,7 @@ var HamsterSchema = new Schema({
   male: Boolean,
   gencode: String,
   hamsterImage: String,
-  birthday: String
+  birthday: Date
 
 });
 

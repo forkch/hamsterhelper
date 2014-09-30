@@ -31,13 +31,16 @@ User.find({}).remove(function () {
 Hamster.find({}).remove(function () {
   Hamster.create({
     name: 'Joe',
-    male: true
+    male: true,
+    birthday: new Date
   }, {
     name: 'Devon',
-    male: true
+    male: true,
+    birthday: new Date
   }, {
     name: 'Athena',
-    male: false
+    male: false,
+    birthday: new Date
   }, function () {
     console.log('finished populating hamsters');
     HamsterGroup.find({}).remove(function () {

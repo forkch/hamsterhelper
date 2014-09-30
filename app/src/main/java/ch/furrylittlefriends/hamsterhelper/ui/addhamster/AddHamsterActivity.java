@@ -17,6 +17,7 @@ import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -56,7 +57,7 @@ public class AddHamsterActivity extends BaseFragmentActivity implements DatePick
     @InjectView(R.id.weightTextView)
     TextView weightTextview;
     private DatePickerDialog datePickerDialog;
-    private LocalDate selectedBirthday;
+    private DateTime selectedBirthday;
     private double weight = 0;
     private DateTimeFormatter formatter;
 
@@ -72,7 +73,7 @@ public class AddHamsterActivity extends BaseFragmentActivity implements DatePick
         gencodeSpinner.setAdapter(gencodesAdapter);
         formatter = DateTimeFormat.forPattern(getString(R.string.birthday_date_format));
 
-        selectedBirthday = LocalDate.now();
+        selectedBirthday = DateTime.now();
         setBirthdayText(selectedBirthday);
     }
 
@@ -148,11 +149,11 @@ public class AddHamsterActivity extends BaseFragmentActivity implements DatePick
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        selectedBirthday = new LocalDate(year, month, day);
+        selectedBirthday = new DateTime(year, month, day, 0,0);
         setBirthdayText(selectedBirthday);
     }
 
-    private void setBirthdayText(LocalDate date) {
+    private void setBirthdayText(DateTime date) {
         birthdaySpinner.setText(getString(R.string.birthday_label) + " " + date.toString(formatter));
     }
 

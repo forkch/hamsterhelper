@@ -15,6 +15,7 @@
     <string name="weight_unit">g</string>
     <string name="gencode_label">Gencode:</string>
     <string name="error_hamstername">Invalid name</string>
+    <string name="no_birthday_set">no birthday</string>
 
     <string-array name="gencodeEntries">
         <item>AA</item>
