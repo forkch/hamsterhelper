@@ -16,13 +16,11 @@ android {
     buildTypes {
         debug {
             buildConfigField "boolean", "LOG_ENABLED", "true"
-            buildConfigField "String", "ENDPOINT", "\"http://10.0.2.2:9000/\""
         }
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "LOG_ENABLED", "false"
-            buildConfigField "String", "ENDPOINT", "\"http://10.0.2.2:9000/\""
         }
     }
 
@@ -38,9 +36,15 @@ android {
     productFlavors {
         development {
             versionName "1.0.0-SNAPSTHOT"
+            buildConfigField "String", "ENDPOINT", "\"http://10.0.2.2:9000/\""
+        }
+        developmentHeroku {
+            versionName "1.0.0-SNAPSTHOT"
+            buildConfigField "String", "ENDPOINT", "\"http://hamsterhelper-dev.herokuapp.com/\""
         }
         production {
             versionName "1.0.0"
+            buildConfigField "String", "ENDPOINT", "\"http://hamsterhelper-dev.herokuapp.com/\""
         }
     }
 }
