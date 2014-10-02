@@ -34,7 +34,7 @@ android {
     }
 
     productFlavors {
-        development {
+        developmentLocal {
             versionName "1.0.0-SNAPSTHOT"
             buildConfigField "String", "ENDPOINT", "\"http://10.0.2.2:9000/\""
         }

@@ -10,7 +10,8 @@ deploy:
   secret_access_key:
     secure: ZtupPSzV0yig62s6Q/IVKT52XTGxAkRlAB0sZ8wT15WmKsiTRMhen0lKEDKk4VDRur2UgwdklMeVWw2a8ALvNmJ81+/K8TxuFrxppbB74ZgERxuP/Fabpn8jYx54ruS9c4SQFxDSv5w56xKNg1yEtRaE7oHXL0gVLpb70rw4r4Q=
   bucket: S3 Bucket
+  skip_cleanup: true
   acl: !ruby/string:HighLine::String private
-  local-dir: app/build/outputs/apk
+  local-dir: build
   on:
     repo: forkch/hamsterhelper
