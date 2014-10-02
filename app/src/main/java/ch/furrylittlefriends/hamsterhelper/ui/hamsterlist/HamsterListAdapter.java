@@ -45,9 +45,14 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.hamster_list_row, parent, false);
+        View rowView;
+        if(convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+             rowView = inflater.inflate(R.layout.hamster_list_row, parent, false);
+        } else {
+            rowView = convertView;
+        }
         TextView nameTextView = (TextView) rowView.findViewById(R.id.hamsterName);
         TextView birthdayTextview= (TextView) rowView.findViewById(R.id.hamsterBirthday);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);

@@ -11,12 +11,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -24,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ch.furrylittlefriends.hamsterhelper.R;
+import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.modules.AddHamsterModule;
 import ch.furrylittlefriends.hamsterhelper.ui.BaseFragmentActivity;
 import icepick.Icepick;
@@ -53,6 +56,12 @@ public class AddHamsterActivity extends BaseFragmentActivity {
 
     @InjectView(R.id.weightTextView)
     TextView weightTextview;
+
+    @InjectView(R.id.motherSpinner)
+    Spinner motherSpinner;
+
+    @InjectView(R.id.fatherSpinner)
+    Spinner fatherSpinner;
 
     private DateTimeFormatter formatter;
 
@@ -180,4 +189,24 @@ public class AddHamsterActivity extends BaseFragmentActivity {
     public void validateBirthdayFailed() {
         birthdaySpinner.setError(getString(R.string.error_birthday));
     }
+
+    public void addMothers(List<Hamster> hamsters) {
+        motherSpinner.setAdapter(new HamsterSpinnerAdapter(this, getHamstersByGender(hamsters, false)));
+    }
+
+
+    public void addFathers(List<Hamster> hamsters) {
+        fatherSpinner.setAdapter(new HamsterSpinnerAdapter(this, getHamstersByGender(hamsters, true)));
+    }
+
+    private List<Hamster> getHamstersByGender(List<Hamster> hamsters, boolean males) {
+        List<Hamster> filteredHamsters = new ArrayList<Hamster>();
+        for (Hamster hamster : hamsters) {
+            if(hamster.isMale() == males) {
+                filteredHamsters.add(hamster);
+            }
+        }
+        return filteredHamsters;
+    }
+
 }

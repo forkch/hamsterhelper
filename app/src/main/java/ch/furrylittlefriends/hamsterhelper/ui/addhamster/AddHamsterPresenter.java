@@ -16,6 +16,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
+import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import icepick.Icepick;
@@ -28,7 +29,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     private static final String TAG = AddHamsterPresenter.class.getSimpleName();
     public static final String VAL_BIRTHDAY = "VAL_BIRTHDAY";
     private AddHamsterActivity view;
-    private HamsterApiInteractor hamsterListInteractor;
+    private HamsterApiInteractor hamsterApiInteractor;
     private Bus bus;
 
     @Icicle
@@ -38,9 +39,9 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
     private DateTimeFormatter formatter;
 
-    public AddHamsterPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterListInteractor, Bus bus) {
+    public AddHamsterPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterApiInteractor1, Bus bus) {
         this.view = view;
-        this.hamsterListInteractor = hamsterListInteractor;
+        this.hamsterApiInteractor = hamsterApiInteractor1;
         this.bus = bus;
         formatter = DateTimeFormat.forPattern(view.getString(R.string.birthday_date_format));
     }
@@ -49,6 +50,8 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         bus.register(this);
         view.setBirthdayText(selectedBirthday);
         view.setWeightText(weight);
+        hamsterApiInteractor.getAllHamsters();
+
     }
 
     public void onPause() {
@@ -59,6 +62,11 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     public void onHamsterAdded(HamsterAddedEvent e) {
 
         view.onHamsterAdded();
+    }
+
+    @Subscribe
+    public void onHamstersLoaded(OnHamstersLoadedEvent e) {
+view.addMothers(e.getHamsters());
     }
 
     public void addHamster() {
@@ -80,7 +88,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         hamster.setWeight(weight);
         hamster.setGencode(gencode);
         hamster.setBirthday(selectedBirthday);
-        hamsterListInteractor.addHamster(hamster);
+        hamsterApiInteractor.addHamster(hamster);
     }
 
     public void showWeightPicker() {

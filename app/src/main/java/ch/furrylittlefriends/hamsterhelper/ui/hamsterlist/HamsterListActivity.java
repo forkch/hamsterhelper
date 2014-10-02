@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +17,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ch.furrylittlefriends.hamsterhelper.R;
-import ch.furrylittlefriends.hamsterhelper.model.Hamster;
-import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
-import ch.furrylittlefriends.hamsterhelper.ui.BaseListActivity;
 import ch.furrylittlefriends.hamsterhelper.modules.HamsterListModule;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import ch.furrylittlefriends.hamsterhelper.ui.BaseListActivity;
+import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
 
 public class HamsterListActivity extends BaseListActivity implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -67,7 +63,6 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
     }
 
 
-
     @Override
     protected void onStop() {
         presenter.onPause();
@@ -75,7 +70,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
     }
 
     @OnClick(R.id.button_floating_action)
-    public void onAddClick(){
+    public void onAddClick() {
         startActivity(new Intent(this, AddHamsterActivity.class));
     }
 
@@ -111,7 +106,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
     }
 
     public void ensureAddButtonVisibility() {
-        if(listView.getCount() == 0) {
+        if (listView.getCount() == 0) {
             floatingActionButton.show();
         }
     }

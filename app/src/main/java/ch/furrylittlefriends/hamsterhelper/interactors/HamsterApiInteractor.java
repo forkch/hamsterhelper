@@ -37,7 +37,6 @@ public class HamsterApiInteractor {
 
     private static final String TAG = HamsterApiInteractor.class.getSimpleName();
 
-
     private final HamsterService hamsterService;
     private final Bus bus;
 
@@ -83,23 +82,6 @@ public class HamsterApiInteractor {
             }
         });
 
-        /*Observable<List<Hamster>> allHamstersObs = hamsterService.getAllHamstersObs();
-        allHamstersObs.subscribe(new Action1<List<Hamster>>() {
-            @Override
-            public void call(List<Hamster> hamsters) {
-
-                Map<String, Hamster> idMap = new HashMap<String, Hamster>();
-                for(Hamster h : hamsters) {
-                    idMap.put(h.getId(), h);
-                }
-                for(Hamster h : hamsters) {
-                    h.setMother(idMap.get(h.getMotherId()));
-                    h.setFather(idMap.get(h.getFatherId()));
-                }
-                bus.post(new
-                        OnHamstersLoadedEvent(hamsters));
-            }
-        });*/
     }
 
     public void addHamster(Hamster hamster) {

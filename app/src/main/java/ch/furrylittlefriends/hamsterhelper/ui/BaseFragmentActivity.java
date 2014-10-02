@@ -6,9 +6,12 @@ import android.support.v4.app.FragmentActivity;
 
 import com.squareup.otto.Bus;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import ch.furrylittlefriends.hamsterhelper.HamsterHelperApplication;
+import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
 
 /**
@@ -40,4 +43,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements H
     public HamsterHelperApplication getMyApplication() {
         return ((HamsterHelperApplication)getApplication());
     }
+
+
 }
