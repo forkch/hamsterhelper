@@ -44,7 +44,7 @@ android {
         }
         production {
             versionName "1.0.0"
-            buildConfigField "String", "ENDPOINT", "\"http://hamsterhelper-dev.herokuapp.com/\""
+            buildConfigField "String", "ENDPOINT", "\"http://hamsterhelper.herokuapp.com/\""
         }
     }
 }
