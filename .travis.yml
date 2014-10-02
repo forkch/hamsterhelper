@@ -1,0 +1,10 @@
+language: android
+
+script: ./gradlew clean build
+
+
+android:
+  components:
+    - build-tools-19.1.0
+
+android_toolkit:   # below would be default values...
