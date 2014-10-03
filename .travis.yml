@@ -12,6 +12,6 @@ deploy:
   bucket: hamsterhelper
   skip_cleanup: true
   acl: !ruby/string:HighLine::String private
-  local-dir: build
+  local-dir: app/build
   on:
     repo: forkch/hamsterhelper
