@@ -22,6 +22,7 @@
     <string name="father_label">Father:</string>
     <string name="hint_name">Name</string>
     <string name="not_available">n/a</string>
+    <string name="error_delete_hamster_with_children">%s has children, cannot delete</string>
 
     <string-array name="gencodeEntries">
         <item>AA</item>

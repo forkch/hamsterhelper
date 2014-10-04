@@ -1,6 +1,5 @@
 package ch.furrylittlefriends.hamsterhelper.jobs;
 
-import com.activeandroid.query.Delete;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
@@ -26,6 +25,7 @@ public class DeleteHamsterJob extends BaseNetworkedJob {
 
     @Override
     public void onAdded() {
+
         hamsterToBeDeleted.delete();
         bus.post(new HamsterDeletedEvent(hamsterToBeDeleted));
 

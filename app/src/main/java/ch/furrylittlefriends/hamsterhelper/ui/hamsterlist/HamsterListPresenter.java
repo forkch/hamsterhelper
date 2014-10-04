@@ -7,6 +7,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
@@ -68,7 +69,11 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDelteButtonLis
     }
 
     public void deleteHamster(Hamster hamster) {
-        jobManager.addJobInBackground(new DeleteHamsterJob(hamster));
+        if(!hamster.hasChildren()) {
+            jobManager.addJobInBackground(new DeleteHamsterJob(hamster));
+        } else {
+            view.cannotDeleteHamsterHasChildren(hamster);
+        }
     }
 
     @Override

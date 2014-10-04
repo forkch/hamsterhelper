@@ -3,18 +3,23 @@ package ch.furrylittlefriends.hamsterhelper.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by fork on 30.08.14.
  */
 @Table(name = "Hamsters")
 public class Hamster extends Model implements Serializable {
+
+    private static final long serialVersionUID = 0L;
+
     @SerializedName("_id")
     @Expose
     @Column(name = "serverId", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
@@ -57,6 +62,14 @@ public class Hamster extends Model implements Serializable {
 
     @Column(name="father")
     private Hamster father;
+
+    // This method is optional, does not affect the foreign key creation.
+    public List<Hamster> children() {
+        List<Hamster> mother1 = getMany(Hamster.class, "mother");
+        List<Hamster> father1 = getMany(Hamster.class, "father");
+        mother1.addAll(father1);
+        return mother1;
+    }
 
     public String getServerId() {
         return serverId;
@@ -146,5 +159,9 @@ public class Hamster extends Model implements Serializable {
 
     public void setFather(Hamster father) {
         this.father = father;
+    }
+
+    public boolean hasChildren() {
+        return children().size() > 0;
     }
 }

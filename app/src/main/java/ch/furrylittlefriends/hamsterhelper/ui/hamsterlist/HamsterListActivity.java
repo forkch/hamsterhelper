@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ch.furrylittlefriends.hamsterhelper.R;
+import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.modules.HamsterListModule;
 import ch.furrylittlefriends.hamsterhelper.ui.BaseListActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
@@ -113,5 +115,9 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
 
     public int getPositionForView(View v) {
         return listView.getPositionForView(v);
+    }
+
+    public void cannotDeleteHamsterHasChildren(Hamster hamster) {
+        Toast.makeText(this, getString(R.string.error_delete_hamster_with_children,hamster.getName()), Toast.LENGTH_SHORT ).show();
     }
 }
