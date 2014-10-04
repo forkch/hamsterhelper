@@ -26,6 +26,9 @@ public interface HamsterService {
     @POST("/api/hamsters")
     public void addHamster(@Body Hamster hamster, Callback<Hamster> cb);
 
+    @POST("/api/hamsters")
+    public Hamster addHamster(@Body Hamster hamster);
+
     @DELETE("/api/hamsters/{id}" )
     public void deleteHamster(@Path("id") String id, Callback<Void> cb);
 }

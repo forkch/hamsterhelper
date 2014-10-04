@@ -6,6 +6,7 @@ import android.view.View;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -18,6 +19,7 @@ import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
+import ch.furrylittlefriends.hamsterhelper.jobs.AddHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import icepick.Icepick;
 import icepick.Icicle;
@@ -31,6 +33,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     private AddHamsterActivity view;
     private HamsterApiInteractor hamsterApiInteractor;
     private Bus bus;
+    private final JobManager jobManager;
 
     @Icicle
     DateTime selectedBirthday;
@@ -39,10 +42,11 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
     private DateTimeFormatter formatter;
 
-    public AddHamsterPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterApiInteractor1, Bus bus) {
+    public AddHamsterPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterApiInteractor1, Bus bus, JobManager jobManager) {
         this.view = view;
         this.hamsterApiInteractor = hamsterApiInteractor1;
         this.bus = bus;
+        this.jobManager = jobManager;
         formatter = DateTimeFormat.forPattern(view.getString(R.string.birthday_date_format));
     }
 
@@ -88,7 +92,8 @@ view.addMothers(e.getHamsters());
         hamster.setWeight(weight);
         hamster.setGencode(gencode);
         hamster.setBirthday(selectedBirthday);
-        hamsterApiInteractor.addHamster(hamster);
+        //hamsterApiInteractor.addHamster(hamster);
+        jobManager.addJobInBackground(new AddHamsterJob(hamster));
     }
 
     public void showWeightPicker() {
@@ -119,7 +124,7 @@ view.addMothers(e.getHamsters());
         }
         DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, selectedBirthday.getYear(), selectedBirthday.getMonthOfYear(), selectedBirthday.getDayOfMonth(), true);
         datePickerDialog.setYearRange(1985, 2028);
-        datePickerDialog.setCloseOnSingleTapDay(true);
+        datePickerDialog.setCloseOnSingleTapDay(false);
         datePickerDialog.show(view.getSupportFragmentManager(), TAG);
     }
 

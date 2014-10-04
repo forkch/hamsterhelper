@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
+import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -86,6 +87,8 @@ public class AddHamsterActivity extends BaseFragmentActivity {
         gencodeSpinner.setAdapter(gencodesAdapter);
 
         formatter = DateTimeFormat.forPattern(getString(R.string.birthday_date_format));
+
+        Picasso.with(this).load(R.drawable.hamster_image).fit().centerCrop().into(hamsterImage);
     }
 
 

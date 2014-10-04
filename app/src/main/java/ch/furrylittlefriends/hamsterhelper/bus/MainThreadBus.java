@@ -11,6 +11,17 @@ import com.squareup.otto.Bus;
 public class MainThreadBus extends Bus {
     private final Handler mainThread = new Handler(Looper.getMainLooper());
 
+    private static final MainThreadBus INSTANCE = new MainThreadBus();
+
+    private MainThreadBus() {
+
+    }
+
+    public static MainThreadBus getMainThreadBus() {
+        return INSTANCE;
+    }
+
+
     @Override
     public void post(final Object event) {
         if (Looper.myLooper() == Looper.getMainLooper()) {

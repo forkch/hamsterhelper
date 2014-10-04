@@ -4,7 +4,12 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
+import com.activeandroid.ActiveAndroid;
+import com.path.android.jobqueue.JobManager;
+import com.path.android.jobqueue.config.Configuration;
+import com.path.android.jobqueue.log.CustomLogger;
 import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
@@ -30,6 +35,7 @@ public class HamsterHelperApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ActiveAndroid.initialize(this);
 
         setupStrictModePolicies();
 
@@ -39,7 +45,6 @@ public class HamsterHelperApplication extends Application {
         bus.register(this);
 
     }
-
 
     private void setupStrictModePolicies() {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()

@@ -9,6 +9,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -58,6 +60,9 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView parents = (TextView) rowView.findViewById(R.id.hamsterParents);
         Hamster hamster = hamsterList.get(position);
+
+        Picasso.with(context).load(R.drawable.hamster_image).fit().centerCrop().into(imageView);
+
         nameTextView.setText(hamster.getName());
 
         if(hamster.getMother() != null && hamster.getFather() != null) {

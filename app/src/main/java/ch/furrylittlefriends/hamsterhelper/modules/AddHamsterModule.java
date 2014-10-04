@@ -1,11 +1,12 @@
 package ch.furrylittlefriends.hamsterhelper.modules;
 
+import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
 
-import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
+import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterPresenter;
 import dagger.Module;
 import dagger.Provides;
@@ -30,8 +31,8 @@ public class AddHamsterModule {
 
     @Provides
     @Singleton
-    public AddHamsterPresenter providesPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterListInteractor, Bus bus) {
-        return new AddHamsterPresenter(view, hamsterListInteractor, bus);
+    public AddHamsterPresenter providesPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterListInteractor, Bus bus, JobManager jobManager) {
+        return new AddHamsterPresenter(view, hamsterListInteractor, bus, jobManager);
     }
 
 }
