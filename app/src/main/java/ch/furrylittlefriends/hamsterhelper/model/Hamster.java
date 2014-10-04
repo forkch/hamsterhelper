@@ -1,40 +1,73 @@
 package ch.furrylittlefriends.hamsterhelper.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
+
+import java.io.Serializable;
 
 /**
  * Created by fork on 30.08.14.
  */
-public class Hamster {
-
-    @Expose
-    private String name;
-    @Expose
-    private boolean male;
-    @Expose
-    private String gencode;
+@Table(name = "Hamsters")
+public class Hamster extends Model implements Serializable {
     @SerializedName("_id")
     @Expose
-    private String id;
+    @Column(name = "serverId")
+    private String serverId;
+
     @SerializedName("__v")
     @Expose
-    private int v;
+    @Column(name = "version")
+    private int version;
+
+    @Expose
+    @Column(name = "name")
+    private String name;
+    @Expose
+    @Column(name = "male")
+    private boolean male;
+    @Expose
+    @Column(name = "gencode")
+    private String gencode;
+
+    @Expose
+    @Column(name = "weight")
     private double weight;
     @Expose
+    @Column(name = "birthday")
     private DateTime birthday;
 
     @Expose
+    @Column(name = "motherId")
     private String motherId;
     @Expose
+    @Column(name = "fatherId")
     private String fatherId;
 
     private Hamster mother;
+
     private Hamster father;
+
+    public String getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
 
     public String getName() {
@@ -45,11 +78,6 @@ public class Hamster {
         this.name = name;
     }
 
-    public Hamster withName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public boolean isMale() {
         return male;
     }
@@ -58,36 +86,6 @@ public class Hamster {
         this.male = male;
     }
 
-    public Hamster withMale(boolean male) {
-        this.male = male;
-        return this;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Hamster withId(String id) {
-        this.id = id;
-        return this;
-    }
-
-    public int getV() {
-        return v;
-    }
-
-    public void setV(int v) {
-        this.v = v;
-    }
-
-    public Hamster withV(int v) {
-        this.v = v;
-        return this;
-    }
 
     public String getGencode() {
         return gencode;
@@ -95,11 +93,6 @@ public class Hamster {
 
     public void setGencode(String gencode) {
         this.gencode = gencode;
-    }
-
-    public Hamster withGencode(String gencode) {
-        this.gencode = gencode;
-        return this;
     }
 
     public void setWeight(double weight) {
