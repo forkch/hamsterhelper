@@ -81,7 +81,7 @@ dependencies {
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.+'
     compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar:3.1.2'
 
-    compile('com.activeandroid:activeandroid:3.1-SNAPSHOT') {
+    /*compile('com.activeandroid:activeandroid:3.1-SNAPSHOT') {
         exclude module: 'support-v4'
-    }
+    }*/
 }
