@@ -29,7 +29,6 @@ import dagger.ObjectGraph;
  */
 public class HamsterHelperApplication extends Application {
 
-
     private ObjectGraph objectGraph;
     @Inject
     Bus bus;
@@ -38,7 +37,6 @@ public class HamsterHelperApplication extends Application {
     public void onCreate() {
         super.onCreate();
         ActiveAndroid.initialize(this);
-        new Delete().from(Hamster.class).execute();
 
         setupStrictModePolicies();
 

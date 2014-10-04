@@ -106,7 +106,7 @@ view.addMothers(e.getHamsters());
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        selectedBirthday = new DateTime(year, month, day, 0, 0);
+        selectedBirthday = new DateTime(year, month+1, day, 0, 0);
         view.setBirthdayText(selectedBirthday);
     }
 
@@ -120,7 +120,7 @@ view.addMothers(e.getHamsters());
         if (selectedBirthday == null) {
             selectedBirthday = DateTime.now();
         }
-        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, selectedBirthday.getYear(), selectedBirthday.getMonthOfYear(), selectedBirthday.getDayOfMonth(), true);
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, selectedBirthday.getYear(), selectedBirthday.getMonthOfYear()-1, selectedBirthday.getDayOfMonth(), true);
         datePickerDialog.setYearRange(1985, 2028);
         datePickerDialog.setCloseOnSingleTapDay(false);
         datePickerDialog.show(view.getSupportFragmentManager(), TAG);
