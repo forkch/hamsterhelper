@@ -42,15 +42,20 @@ public class Hamster extends Model implements Serializable {
     @Column(name = "birthday")
     private DateTime birthday;
 
+    @SerializedName("motherId")
     @Expose
-    @Column(name = "motherId")
-    private String motherId;
-    @Expose
-    @Column(name = "fatherId")
-    private String fatherId;
+    @Column(name = "motherServerId")
+    private String motherServerId;
 
+    @SerializedName("fatherId")
+    @Expose
+    @Column(name = "fatherServerId")
+    private String fatherServerId;
+
+    @Column(name="mother")
     private Hamster mother;
 
+    @Column(name="father")
     private Hamster father;
 
     public String getServerId() {
@@ -111,20 +116,20 @@ public class Hamster extends Model implements Serializable {
         return birthday;
     }
 
-    public String getMotherId() {
-        return motherId;
+    public String getMotherServerId() {
+        return motherServerId;
     }
 
-    public void setMotherId(String motherId) {
-        this.motherId = motherId;
+    public void setMotherServerId(String motherServerId) {
+        this.motherServerId = motherServerId;
     }
 
-    public String getFatherId() {
-        return fatherId;
+    public String getFatherServerId() {
+        return fatherServerId;
     }
 
-    public void setFatherId(String fatherId) {
-        this.fatherId = fatherId;
+    public void setFatherServerId(String fatherServerId) {
+        this.fatherServerId = fatherServerId;
     }
 
     public Hamster getMother() {

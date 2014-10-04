@@ -2,7 +2,6 @@ package ch.furrylittlefriends.hamsterhelper.interactors;
 
 import android.util.Log;
 
-import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.squareup.otto.Bus;
 
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
-import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.services.HamsterService;
@@ -90,8 +88,8 @@ public class HamsterApiInteractor {
                     idMap.put(h.getServerId(), h);
                 }
                 for (Hamster h : hamsters) {
-                    h.setMother(idMap.get(h.getMotherId()));
-                    h.setFather(idMap.get(h.getFatherId()));
+                    h.setMother(idMap.get(h.getMotherServerId()));
+                    h.setFather(idMap.get(h.getFatherServerId()));
                     h.save();
                 }
                 getAllHamsters();
