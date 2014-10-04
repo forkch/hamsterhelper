@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Delete;
 import com.path.android.jobqueue.JobManager;
 import com.path.android.jobqueue.config.Configuration;
 import com.path.android.jobqueue.log.CustomLogger;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.ui.SettingsActivity;
 import ch.furrylittlefriends.hamsterhelper.modules.HamsterHelperModule;
 import dagger.ObjectGraph;
@@ -36,6 +38,7 @@ public class HamsterHelperApplication extends Application {
     public void onCreate() {
         super.onCreate();
         ActiveAndroid.initialize(this);
+        new Delete().from(Hamster.class).execute();
 
         setupStrictModePolicies();
 

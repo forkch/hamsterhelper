@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -71,9 +72,9 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
             parents.setText(context.getString(R.string.not_available));
         }
 
-        LocalDate birthday = hamster.getBirthday().toLocalDate();
+        DateTime birthday = hamster.getBirthday();
         if(birthday != null) {
-            birthdayTextview.setText(context.getString(R.string.birthday_label) + " " + birthday.toString(dateTimeFormatter));
+            birthdayTextview.setText(context.getString(R.string.birthday_label) + " " + birthday.toLocalDate().toString(dateTimeFormatter));
         }else {
             birthdayTextview.setText(context.getString(R.string.no_birthday_set));
         }

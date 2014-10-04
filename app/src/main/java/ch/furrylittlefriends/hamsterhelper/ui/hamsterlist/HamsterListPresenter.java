@@ -2,6 +2,7 @@ package ch.furrylittlefriends.hamsterhelper.ui.hamsterlist;
 
 import android.view.View;
 
+import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
+import ch.furrylittlefriends.hamsterhelper.jobs.DeleteHamsterJob;
+import ch.furrylittlefriends.hamsterhelper.jobs.HamsterSyncJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
 /**
@@ -20,12 +23,14 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDelteButtonLis
     private HamsterListActivity view;
     private HamsterApiInteractor hamsterApiInteractor;
     private Bus bus;
+    private final JobManager jobManager;
     private final HamsterListAdapter hamsterListAdapter;
 
-    public HamsterListPresenter(HamsterListActivity view, HamsterApiInteractor hamsterListInteractor, Bus bus) {
+    public HamsterListPresenter(HamsterListActivity view, HamsterApiInteractor hamsterListInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
         this.hamsterApiInteractor = hamsterListInteractor;
         this.bus = bus;
+        this.jobManager = jobManager;
         hamsterListAdapter =
                 new HamsterListAdapter(view, new ArrayList<Hamster>(), this);
         view.setListAdapter(hamsterListAdapter);
@@ -40,6 +45,9 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDelteButtonLis
         bus.unregister(this);
     }
 
+    public void syncHamsters() {
+        jobManager.addJobInBackground(new HamsterSyncJob());
+    }
 
     public void loadHamsters() {
         hamsterApiInteractor.getAllHamsters();
@@ -59,8 +67,8 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDelteButtonLis
         view.ensureAddButtonVisibility();
     }
 
-    public void deleteHamster(Hamster item) {
-        hamsterApiInteractor.deleteHamster(item);
+    public void deleteHamster(Hamster hamster) {
+        jobManager.addJobInBackground(new DeleteHamsterJob(hamster));
     }
 
     @Override

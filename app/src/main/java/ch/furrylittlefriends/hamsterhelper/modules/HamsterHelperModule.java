@@ -21,6 +21,8 @@ import ch.furrylittlefriends.hamsterhelper.BuildConfig;
 import ch.furrylittlefriends.hamsterhelper.HamsterHelperApplication;
 import ch.furrylittlefriends.hamsterhelper.bus.MainThreadBus;
 import ch.furrylittlefriends.hamsterhelper.jobs.AddHamsterJob;
+import ch.furrylittlefriends.hamsterhelper.jobs.DeleteHamsterJob;
+import ch.furrylittlefriends.hamsterhelper.jobs.HamsterSyncJob;
 import ch.furrylittlefriends.hamsterhelper.ui.SettingsActivity;
 import dagger.Module;
 import dagger.Provides;
@@ -35,7 +37,9 @@ import retrofit.converter.GsonConverter;
 @Module(
         injects = {HamsterHelperApplication.class,
                 SettingsActivity.class,
-                AddHamsterJob.class},
+                AddHamsterJob.class,
+                HamsterSyncJob.class,
+                DeleteHamsterJob.class},
         library = true,
         includes = InteractorsModule.class
 

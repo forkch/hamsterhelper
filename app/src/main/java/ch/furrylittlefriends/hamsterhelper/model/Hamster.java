@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Hamster extends Model implements Serializable {
     @SerializedName("_id")
     @Expose
-    @Column(name = "serverId")
+    @Column(name = "serverId", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private String serverId;
 
     @SerializedName("__v")

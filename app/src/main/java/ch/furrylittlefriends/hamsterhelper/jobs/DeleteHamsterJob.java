@@ -1,39 +1,39 @@
 package ch.furrylittlefriends.hamsterhelper.jobs;
 
+import com.activeandroid.query.Delete;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
 
-import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
+import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
 /**
  * Created by fork on 04.10.14.
  */
-public class AddHamsterJob extends BaseNetworkedJob {
+public class DeleteHamsterJob extends BaseNetworkedJob {
 
-    private final Hamster hamsterToBeAdded;
+    private final Hamster hamsterToBeDeleted;
     @Inject
     HamsterApiInteractor hamsterApiInteractor;
     @Inject
     Bus bus;
 
-
-    public AddHamsterJob(Hamster hamsterToBeAdded) {
-        this.hamsterToBeAdded = hamsterToBeAdded;
+    public DeleteHamsterJob(Hamster hamsterToBeDeleted) {
+        this.hamsterToBeDeleted = hamsterToBeDeleted;
     }
 
     @Override
     public void onAdded() {
-        hamsterToBeAdded.save();
-        bus.post(new HamsterAddedEvent(hamsterToBeAdded));
+        hamsterToBeDeleted.delete();
+        bus.post(new HamsterDeletedEvent(hamsterToBeDeleted));
 
     }
 
     @Override
     public void onRun() throws Throwable {
-        hamsterApiInteractor.addHamsterSync(hamsterToBeAdded);
+        hamsterApiInteractor.deleteHamster(hamsterToBeDeleted);
     }
 
     @Override

@@ -42,9 +42,9 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
     private DateTimeFormatter formatter;
 
-    public AddHamsterPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterApiInteractor1, Bus bus, JobManager jobManager) {
+    public AddHamsterPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterApiInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
-        this.hamsterApiInteractor = hamsterApiInteractor1;
+        this.hamsterApiInteractor = hamsterApiInteractor;
         this.bus = bus;
         this.jobManager = jobManager;
         formatter = DateTimeFormat.forPattern(view.getString(R.string.birthday_date_format));
@@ -64,7 +64,6 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
     @Subscribe
     public void onHamsterAdded(HamsterAddedEvent e) {
-
         view.onHamsterAdded();
     }
 
@@ -92,7 +91,6 @@ view.addMothers(e.getHamsters());
         hamster.setWeight(weight);
         hamster.setGencode(gencode);
         hamster.setBirthday(selectedBirthday);
-        //hamsterApiInteractor.addHamster(hamster);
         jobManager.addJobInBackground(new AddHamsterJob(hamster));
     }
 

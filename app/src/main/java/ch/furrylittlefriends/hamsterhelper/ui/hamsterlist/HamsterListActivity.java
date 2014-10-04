@@ -92,7 +92,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
 
     @Override
     public void onRefresh() {
-        presenter.loadHamsters();
+        presenter.syncHamsters();
     }
 
     public void onHamstersLoaded() {
