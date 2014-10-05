@@ -54,7 +54,6 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.button_floating_action);
         floatingActionButton.attachToListView(listView);
-
     }
 
     @Override
@@ -102,15 +101,10 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
             @Override
             public void run() {
                 pullToRefreshLayout.setRefreshing(false);
+                floatingActionButton.show();
             }
         }, 1000);
 
-    }
-
-    public void ensureAddButtonVisibility() {
-        if (listView.getCount() == 0) {
-            floatingActionButton.show();
-        }
     }
 
     public int getPositionForView(View v) {
@@ -118,6 +112,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
     }
 
     public void cannotDeleteHamsterHasChildren(Hamster hamster) {
-        Toast.makeText(this, getString(R.string.error_delete_hamster_with_children,hamster.getName()), Toast.LENGTH_SHORT ).show();
+        Toast.makeText(this, getString(R.string.error_delete_hamster_with_children, hamster.getName()), Toast.LENGTH_SHORT).show();
     }
+
 }

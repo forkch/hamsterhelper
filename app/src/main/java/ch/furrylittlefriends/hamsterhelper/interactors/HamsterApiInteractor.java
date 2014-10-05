@@ -37,6 +37,7 @@ public class HamsterApiInteractor {
     public void getAllHamsters() {
         Log.i(TAG, "loading hamsters from database");
         List<Hamster> hamsters = new Select().from(Hamster.class).execute();
+
         Log.i(TAG, "loaded " + hamsters.size() + " hamsters from database");
         bus.post(new OnHamstersLoadedEvent(hamsters));
     }
@@ -46,7 +47,7 @@ public class HamsterApiInteractor {
         hamsterService.addHamster(hamster, new Callback<Hamster>() {
             @Override
             public void success(Hamster hamster, Response response) {
-                bus.post(new HamsterAddedEvent(hamster));
+                bus.post(new HamsterAddedEvent(hamster, true));
             }
 
             @Override
@@ -57,10 +58,10 @@ public class HamsterApiInteractor {
 
     }
 
-    public void addHamsterSync(Hamster hamster) {
+    public Hamster addHamsterSync(Hamster hamster) {
 
         Log.i(TAG, "syncing hamsters from server to database");
-        hamsterService.addHamster(hamster);
+        return hamsterService.addHamster(hamster);
 
     }
 

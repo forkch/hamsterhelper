@@ -39,7 +39,6 @@ public class HamsterHelperApplication extends Application {
         ActiveAndroid.initialize(this);
 
         setupStrictModePolicies();
-
         setupDagger();
 
         //ConfigureLog4J.configure();

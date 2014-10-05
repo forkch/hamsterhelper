@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,38 +13,29 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
-import butterknife.OnClick;
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
 /**
  * Created by fork on 30.08.14.
  */
-public class HamsterListAdapter extends ArrayAdapter<Hamster>{
+public class HamsterListAdapter extends ArrayAdapter<Hamster> {
 
     private Context context;
-    private List<Hamster> hamsterList;
-    private final OnDelteButtonListener deleteButtonListener;
+    private final OnDeleteButtonListener deleteButtonListener;
     private final DateTimeFormatter dateTimeFormatter;
 
 
-    public HamsterListAdapter(Context context, List<Hamster> hamsterList, OnDelteButtonListener deleteButtonListener) {
-        super(context, R.layout.hamster_list_row, hamsterList);
+    public HamsterListAdapter(Context context, List<Hamster> hamsterList, OnDeleteButtonListener deleteButtonListener) {
+        super(context,R.layout.hamster_list_row, hamsterList);
         this.context = context;
-        this.hamsterList = hamsterList;
         this.deleteButtonListener = deleteButtonListener;
         dateTimeFormatter = DateTimeFormat.forPattern(context.getString(R.string.birthday_date_format));
-    }
-
-    @Override
-    public int getCount() {
-        return super.getCount();
     }
 
     @Override
@@ -60,7 +52,7 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
         TextView birthdayTextview= (TextView) rowView.findViewById(R.id.hamsterBirthday);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView parents = (TextView) rowView.findViewById(R.id.hamsterParents);
-        Hamster hamster = hamsterList.get(position);
+        Hamster hamster = getItem(position);
 
         Picasso.with(context).load(R.drawable.hamster_image).fit().centerCrop().into(imageView);
 
@@ -92,7 +84,7 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster>{
         return rowView;
     }
 
-    public interface OnDelteButtonListener {
+    public interface OnDeleteButtonListener {
         public void onDelete(View view);
     }
 }

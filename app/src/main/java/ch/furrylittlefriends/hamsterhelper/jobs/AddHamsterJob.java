@@ -1,6 +1,12 @@
 package ch.furrylittlefriends.hamsterhelper.jobs;
 
+import android.util.Log;
+
+import com.activeandroid.query.Select;
+import com.activeandroid.query.Update;
 import com.squareup.otto.Bus;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -13,11 +19,12 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
  */
 public class AddHamsterJob extends BaseNetworkedJob {
 
-    private final Hamster hamsterToBeAdded;
+    private Hamster hamsterToBeAdded;
+
     @Inject
-    HamsterApiInteractor hamsterApiInteractor;
+    transient HamsterApiInteractor hamsterApiInteractor;
     @Inject
-    Bus bus;
+    transient Bus bus;
 
 
     public AddHamsterJob(Hamster hamsterToBeAdded) {
@@ -26,14 +33,15 @@ public class AddHamsterJob extends BaseNetworkedJob {
 
     @Override
     public void onAdded() {
-        hamsterToBeAdded.save();
-        bus.post(new HamsterAddedEvent(hamsterToBeAdded));
-
     }
 
     @Override
     public void onRun() throws Throwable {
-        hamsterApiInteractor.addHamsterSync(hamsterToBeAdded);
+        Hamster hamsterFromServer = hamsterApiInteractor.addHamsterSync(hamsterToBeAdded);
+
+        new Update(Hamster.class).set("serverId", hamsterToBeAdded.getServerId()).where("Id = ?", hamsterToBeAdded.getId());
+
+        bus.post(new HamsterAddedEvent(hamsterFromServer, true));
     }
 
     @Override
@@ -45,4 +53,5 @@ public class AddHamsterJob extends BaseNetworkedJob {
     protected boolean shouldReRunOnThrowable(Throwable throwable) {
         return true;
     }
+
 }

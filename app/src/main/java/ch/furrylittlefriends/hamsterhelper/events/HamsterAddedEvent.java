@@ -7,9 +7,15 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
  */
 public class HamsterAddedEvent {
     private Hamster hamster;
+    private final boolean syncedWithServer;
 
-    public HamsterAddedEvent(Hamster hamster) {
+    public HamsterAddedEvent(Hamster hamster, boolean syncedWithServer) {
         this.hamster = hamster;
+        this.syncedWithServer = syncedWithServer;
+    }
+
+    public boolean isSyncedWithServer() {
+        return syncedWithServer;
     }
 
     public Hamster getHamster() {

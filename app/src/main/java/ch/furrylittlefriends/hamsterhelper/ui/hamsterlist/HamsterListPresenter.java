@@ -1,25 +1,29 @@
 package ch.furrylittlefriends.hamsterhelper.ui.hamsterlist;
 
 import android.view.View;
+import android.widget.Toast;
 
 import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+
+import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
 import ch.furrylittlefriends.hamsterhelper.jobs.DeleteHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.jobs.HamsterSyncJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.util.NetworkHelper;
 
 /**
  * Created by fork on 01.09.14.
  */
-public class HamsterListPresenter implements HamsterListAdapter.OnDelteButtonListener {
+public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonListener {
     private static String TAG = HamsterListPresenter.class.getSimpleName();
     private HamsterListActivity view;
     private HamsterApiInteractor hamsterApiInteractor;
@@ -27,7 +31,7 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDelteButtonLis
     private final JobManager jobManager;
     private final HamsterListAdapter hamsterListAdapter;
 
-    public HamsterListPresenter(HamsterListActivity view, HamsterApiInteractor hamsterListInteractor, Bus bus, JobManager jobManager) {
+    public HamsterListPresenter(final HamsterListActivity view, HamsterApiInteractor hamsterListInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
         this.hamsterApiInteractor = hamsterListInteractor;
         this.bus = bus;
@@ -47,7 +51,12 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDelteButtonLis
     }
 
     public void syncHamsters() {
-        jobManager.addJobInBackground(new HamsterSyncJob());
+        if(NetworkHelper.isConnected(view)) {
+            jobManager.addJobInBackground(new HamsterSyncJob());
+        } else {
+            Toast.makeText(view, "not connected", Toast.LENGTH_SHORT).show();
+            view.onHamstersLoaded();
+        }
     }
 
     public void loadHamsters() {
@@ -59,13 +68,19 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDelteButtonLis
         hamsterListAdapter.clear();
         hamsterListAdapter.addAll(e.getHamsters());
         view.onHamstersLoaded();
-        view.ensureAddButtonVisibility();
+    }
+
+    @Subscribe
+    public void onHamsterAdded(HamsterAddedEvent e)
+    {
+        if(e.isSyncedWithServer()) {
+            loadHamsters();
+        }
     }
 
     @Subscribe
     public void onHamsterDeleted(final HamsterDeletedEvent e) {
-        loadHamsters();
-        view.ensureAddButtonVisibility();
+        hamsterListAdapter.remove(e.getHamster());
     }
 
     public void deleteHamster(Hamster hamster) {
@@ -78,9 +93,12 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDelteButtonLis
 
     @Override
     public void onDelete(View v) {
-
         int positionForView = view.getPositionForView(v);
         Hamster hamster = hamsterListAdapter.getItem(positionForView);
+        if(StringUtils.isBlank(hamster.getServerId())) {
+            Toast.makeText(view, "Hamster not yet synced with server", Toast.LENGTH_SHORT).show();
+            return;
+        }
         deleteHamster(hamster);
     }
 }

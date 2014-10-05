@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.path.android.jobqueue.Job;
 import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -117,6 +118,9 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         hamster.setWeight(weight);
         hamster.setGencode(gencode);
         hamster.setBirthday(selectedBirthday);
+
+        hamster.save();
+
         jobManager.addJobInBackground(new AddHamsterJob(hamster));
     }
 

@@ -3,6 +3,7 @@ package ch.furrylittlefriends.hamsterhelper.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Update;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -164,4 +165,6 @@ public class Hamster extends Model implements Serializable {
     public boolean hasChildren() {
         return children().size() > 0;
     }
+
+
 }
