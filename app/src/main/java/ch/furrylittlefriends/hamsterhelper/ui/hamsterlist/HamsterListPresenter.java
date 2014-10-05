@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
+import ch.furrylittlefriends.hamsterhelper.events.OnHamstersSyncedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
+import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
 import ch.furrylittlefriends.hamsterhelper.jobs.DeleteHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.jobs.HamsterSyncJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
@@ -26,13 +28,15 @@ import ch.furrylittlefriends.hamsterhelper.util.NetworkHelper;
 public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonListener {
     private static String TAG = HamsterListPresenter.class.getSimpleName();
     private HamsterListActivity view;
+    private final HamsterOfflineIteractor hamsterOfflineIteractor;
     private HamsterApiInteractor hamsterApiInteractor;
     private Bus bus;
     private final JobManager jobManager;
     private final HamsterListAdapter hamsterListAdapter;
 
-    public HamsterListPresenter(final HamsterListActivity view, HamsterApiInteractor hamsterListInteractor, Bus bus, JobManager jobManager) {
+    public HamsterListPresenter(final HamsterListActivity view, HamsterOfflineIteractor hamsterOfflineIteractor, HamsterApiInteractor hamsterListInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
+        this.hamsterOfflineIteractor = hamsterOfflineIteractor;
         this.hamsterApiInteractor = hamsterListInteractor;
         this.bus = bus;
         this.jobManager = jobManager;
@@ -51,7 +55,7 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonLi
     }
 
     public void syncHamsters() {
-        if(NetworkHelper.isConnected(view)) {
+        if (NetworkHelper.isConnected(view)) {
             jobManager.addJobInBackground(new HamsterSyncJob());
         } else {
             Toast.makeText(view, "not connected", Toast.LENGTH_SHORT).show();
@@ -60,7 +64,12 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonLi
     }
 
     public void loadHamsters() {
-        hamsterApiInteractor.getAllHamsters();
+        hamsterOfflineIteractor.getAllHamsters();
+    }
+
+    @Subscribe
+    public void onHamstersSync(final OnHamstersSyncedEvent e) {
+        loadHamsters();
     }
 
     @Subscribe
@@ -71,9 +80,8 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonLi
     }
 
     @Subscribe
-    public void onHamsterAdded(HamsterAddedEvent e)
-    {
-        if(e.isSyncedWithServer()) {
+    public void onHamsterAdded(HamsterAddedEvent e) {
+        if (e.isSyncedWithServer()) {
             loadHamsters();
         }
     }
@@ -84,7 +92,7 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonLi
     }
 
     public void deleteHamster(Hamster hamster) {
-        if(!hamster.hasChildren()) {
+        if (!hamster.hasChildren()) {
             jobManager.addJobInBackground(new DeleteHamsterJob(hamster));
         } else {
             view.cannotDeleteHamsterHasChildren(hamster);
@@ -95,7 +103,7 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonLi
     public void onDelete(View v) {
         int positionForView = view.getPositionForView(v);
         Hamster hamster = hamsterListAdapter.getItem(positionForView);
-        if(StringUtils.isBlank(hamster.getServerId())) {
+        if (StringUtils.isBlank(hamster.getServerId())) {
             Toast.makeText(view, "Hamster not yet synced with server", Toast.LENGTH_SHORT).show();
             return;
         }

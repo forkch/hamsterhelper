@@ -2,15 +2,13 @@ package ch.furrylittlefriends.hamsterhelper.interactors;
 
 import android.util.Log;
 
-import com.activeandroid.query.Select;
 import com.squareup.otto.Bus;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
-import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
+import ch.furrylittlefriends.hamsterhelper.events.OnHamstersSyncedEvent;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.services.HamsterService;
 import retrofit.Callback;
@@ -34,35 +32,9 @@ public class HamsterApiInteractor {
         hamsterService = restAdapter.create(HamsterService.class);
     }
 
-    public void getAllHamsters() {
-        Log.i(TAG, "loading hamsters from database");
-        List<Hamster> hamsters = new Select().from(Hamster.class).execute();
-
-        Log.i(TAG, "loaded " + hamsters.size() + " hamsters from database");
-        bus.post(new OnHamstersLoadedEvent(hamsters));
-    }
-
-    public void addHamster(Hamster hamster) {
-
-        hamsterService.addHamster(hamster, new Callback<Hamster>() {
-            @Override
-            public void success(Hamster hamster, Response response) {
-                bus.post(new HamsterAddedEvent(hamster, true));
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG, error.getMessage());
-            }
-        });
-
-    }
 
     public Hamster addHamsterSync(Hamster hamster) {
-
-        Log.i(TAG, "syncing hamsters from server to database");
         return hamsterService.addHamster(hamster);
-
     }
 
     public void deleteHamster(final Hamster hamster) {
@@ -93,7 +65,7 @@ public class HamsterApiInteractor {
                     h.setFather(idMap.get(h.getFatherServerId()));
                     h.save();
                 }
-                getAllHamsters();
+                bus.post(new OnHamstersSyncedEvent());
             }
 
             @Override

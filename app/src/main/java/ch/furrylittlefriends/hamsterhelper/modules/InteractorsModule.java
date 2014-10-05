@@ -7,6 +7,7 @@ import com.squareup.otto.Bus;
 import javax.inject.Singleton;
 
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
+import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
 import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;
@@ -21,5 +22,11 @@ public class InteractorsModule {
     @Singleton
     public HamsterApiInteractor provideHamsterListInteractor(Bus bus, RestAdapter restAdapter) {
         return new HamsterApiInteractor(bus, restAdapter);
+    }
+
+    @Provides
+    @Singleton
+    public HamsterOfflineIteractor provideHamsterListInteractor(Bus bus) {
+        return new HamsterOfflineIteractor(bus);
     }
 }

@@ -31,6 +31,7 @@ import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
+import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
 import ch.furrylittlefriends.hamsterhelper.jobs.AddHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.views.SimpleDialog;
@@ -44,6 +45,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     private static final String TAG = AddHamsterPresenter.class.getSimpleName();
     public static final String VAL_BIRTHDAY = "VAL_BIRTHDAY";
     private AddHamsterActivity view;
+    private final HamsterOfflineIteractor hamsterOfflineIteractor;
     private HamsterApiInteractor hamsterApiInteractor;
     private Bus bus;
     private final JobManager jobManager;
@@ -69,8 +71,9 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     private File mImageCroppedFile;
     private Uri mImageCroppedUri;
 
-    public AddHamsterPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterApiInteractor, Bus bus, JobManager jobManager) {
+    public AddHamsterPresenter(AddHamsterActivity view, HamsterOfflineIteractor hamsterOfflineIteractor,HamsterApiInteractor hamsterApiInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
+        this.hamsterOfflineIteractor = hamsterOfflineIteractor;
         this.hamsterApiInteractor = hamsterApiInteractor;
         this.bus = bus;
         this.jobManager = jobManager;
@@ -81,7 +84,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         bus.register(this);
         view.setBirthdayText(selectedBirthday);
         view.setWeightText(weight);
-        hamsterApiInteractor.getAllHamsters();
+        hamsterOfflineIteractor.getAllHamsters();
 
     }
 
@@ -122,6 +125,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         hamster.save();
 
         jobManager.addJobInBackground(new AddHamsterJob(hamster));
+
     }
 
     public void showWeightPicker() {
