@@ -154,7 +154,7 @@
             android:layout_weight="1"
             android:id="@+id/cancel"
             android:layout_gravity="right|bottom"
-            android:background="@null" />
+            style="@style/AppTheme.Button.Secondary" />
 
         <ImageView
             android:layout_width="1dp"
@@ -169,7 +169,7 @@
             android:layout_weight="1"
             android:id="@+id/save"
             android:layout_gravity="right|bottom"
-            android:background="@null" />
+            style="@style/AppTheme.Button.Primary" />
 
     </LinearLayout>
 </LinearLayout>

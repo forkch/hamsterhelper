@@ -1,5 +1,7 @@
 package ch.furrylittlefriends.hamsterhelper.ui.addhamster;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,7 +71,7 @@ public class AddHamsterActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_add_hamster);
+
         FadingActionBarHelper helper = new FadingActionBarHelper()
                 .actionBarBackground(R.color.add_hamster_picture_button_color)
                 .headerLayout(R.layout.add_hamster_header)
@@ -88,7 +90,8 @@ public class AddHamsterActivity extends BaseFragmentActivity {
 
         formatter = DateTimeFormat.forPattern(getString(R.string.birthday_date_format));
 
-        Picasso.with(this).load(R.drawable.hamster_image).fit().centerCrop().into(hamsterImage);
+        setHamsterImage(null);
+
     }
 
 
@@ -143,6 +146,13 @@ public class AddHamsterActivity extends BaseFragmentActivity {
     @OnClick(R.id.weightTextView)
     public void onWeightClick() {
         presenter.showWeightPicker();
+    }
+
+
+    @OnClick(R.id.addPicture)
+    public void onAddPictureClick() {
+        presenter.selectPicture();
+
     }
 
     @OnClick(R.id.save)
@@ -205,11 +215,24 @@ public class AddHamsterActivity extends BaseFragmentActivity {
     private List<Hamster> getHamstersByGender(List<Hamster> hamsters, boolean males) {
         List<Hamster> filteredHamsters = new ArrayList<Hamster>();
         for (Hamster hamster : hamsters) {
-            if(hamster.isMale() == males) {
+            if (hamster.isMale() == males) {
                 filteredHamsters.add(hamster);
             }
         }
         return filteredHamsters;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        presenter.processResult(requestCode, resultCode, data);
+    }
+
+    public void setHamsterImage(Uri mImageCaptureUri) {
+        if (mImageCaptureUri == null) {
+            Picasso.with(this).load(R.drawable.hamster_image).fit().centerCrop().into(hamsterImage);
+        } else {
+            Picasso.with(this).load(mImageCaptureUri).fit().centerCrop().into(hamsterImage);
+        }
     }
 
 }

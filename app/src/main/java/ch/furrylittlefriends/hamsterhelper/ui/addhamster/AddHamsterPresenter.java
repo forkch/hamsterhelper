@@ -1,7 +1,16 @@
 package ch.furrylittlefriends.hamsterhelper.ui.addhamster;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
@@ -15,12 +24,15 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.File;
+
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
 import ch.furrylittlefriends.hamsterhelper.jobs.AddHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.views.SimpleDialog;
 import icepick.Icepick;
 import icepick.Icicle;
 
@@ -41,6 +53,20 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     double weight = 0;
 
     private DateTimeFormatter formatter;
+    @Icicle
+     File mImageCaptureFile;
+    @Icicle
+     Uri mImageCaptureUri;
+
+    private static final String STATE_CAPTURE_URI = "STATE_CAPTURE_URI";
+    private static final String STATE_CROPPED_URI = "STATE_CROPPED_URI";
+    private static final String STATE_USERNAME = "STATE_USERNAME";
+    private static final String STATE_EMAIL = "STATE_EMAIL";
+    private static final int PICK_FROM_CAMERA = 1;
+    private static final int PICK_FROM_FILE = 2;
+    private static final int IMAGE_CROPPED = 3;
+    private File mImageCroppedFile;
+    private Uri mImageCroppedUri;
 
     public AddHamsterPresenter(AddHamsterActivity view, HamsterApiInteractor hamsterApiInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
@@ -69,7 +95,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
     @Subscribe
     public void onHamstersLoaded(OnHamstersLoadedEvent e) {
-view.addMothers(e.getHamsters());
+        view.addMothers(e.getHamsters());
     }
 
     public void addHamster() {
@@ -106,7 +132,7 @@ view.addMothers(e.getHamsters());
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        selectedBirthday = new DateTime(year, month+1, day, 0, 0);
+        selectedBirthday = new DateTime(year, month + 1, day, 0, 0);
         view.setBirthdayText(selectedBirthday);
     }
 
@@ -120,7 +146,7 @@ view.addMothers(e.getHamsters());
         if (selectedBirthday == null) {
             selectedBirthday = DateTime.now();
         }
-        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, selectedBirthday.getYear(), selectedBirthday.getMonthOfYear()-1, selectedBirthday.getDayOfMonth(), true);
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, selectedBirthday.getYear(), selectedBirthday.getMonthOfYear() - 1, selectedBirthday.getDayOfMonth(), true);
         datePickerDialog.setYearRange(1985, 2028);
         datePickerDialog.setCloseOnSingleTapDay(false);
         datePickerDialog.show(view.getSupportFragmentManager(), TAG);
@@ -132,5 +158,110 @@ view.addMothers(e.getHamsters());
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         Icepick.restoreInstanceState(this, savedInstanceState);
+    }
+
+    public void selectPicture() {
+
+        SimpleDialog.DialogBuilder dialogBuilder = new SimpleDialog.DialogBuilder(view, view.getFragmentManager());
+        dialogBuilder.setTitle("Choose picture")
+                .setPrimaryButton("Make a picture", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                            File hamsterhelperDirectory = new File(Environment.getExternalStorageDirectory(), "hamsterhelper");
+                            hamsterhelperDirectory.mkdirs();
+                            mImageCaptureFile = new File(hamsterhelperDirectory,
+                                    "tmp_avatar_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+                            mImageCaptureUri = Uri.fromFile(mImageCaptureFile);
+
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+
+                            try {
+                                intent.putExtra("return-data", false);
+                                view.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+                                view.startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                            } catch (ActivityNotFoundException e) {
+                                Log.e(TAG, "no activity found for intent " + MediaStore.ACTION_IMAGE_CAPTURE);
+                                Toast.makeText(view, "no camera app installed", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(view, "no external storage", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }).setSecondaryButton("Select from gallery", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+
+                intent.setType("image/*");
+                intent.putExtra("return-data", false);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                view.startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);
+            }
+        }).show();
+    }
+
+    public void processResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            cleanupFiles();
+            return;
+        }
+
+        switch (requestCode) {
+            case PICK_FROM_CAMERA:
+                break;
+            case PICK_FROM_FILE:
+                if (data == null) {
+                    Log.i(TAG, "user cancelled taking picture from gallery");
+                    return;
+                }
+                mImageCaptureUri = data.getData();
+                break;
+            /*case IMAGE_CROPPED:
+                Bitmap photo = null;
+                InputStream is = null;
+                try {
+                    is = view.getContentResolver().openInputStream(mImageCroppedUri);
+                    photo = BitmapFactory.decodeStream(is);
+
+                    cleanupFiles();
+
+                } catch (FileNotFoundException e) {
+                    Log.i(TAG, "could not find picture taken from the camera or gallery (maybe user cancelled) " + mImageCaptureUri);
+                } finally {
+                    IOUtils.closeQuietly(is);
+                }
+                break;*/
+        }
+        view.setHamsterImage(mImageCaptureUri);
+    }
+
+    private void cleanupFiles() {
+        if (mImageCaptureFile != null && mImageCaptureFile.exists()) {
+            mImageCaptureFile.delete();
+            mImageCaptureUri = null;
+        }
+        if (mImageCroppedFile != null && mImageCroppedFile.exists()) {
+            mImageCroppedFile.delete();
+            mImageCaptureUri = null;
+        }
+    }
+
+    private void doCrop() {
+/*
+        mImageCroppedFile = new File(view.getCacheDir(),
+                "tmp_avatar_cropped" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+        mImageCroppedUri = Uri.fromFile(mImageCroppedFile);
+
+        Intent i = new Intent(this, CropActivity.class);
+        i.putExtra(ExtraDataKeys.IMAGE_CAPTURE_URI, mImageCaptureUri);
+        i.putExtra(ExtraDataKeys.IMAGE_CROPPED_URI, mImageCroppedUri);
+        view.startActivityForResult(i, IMAGE_CROPPED);*/
     }
 }

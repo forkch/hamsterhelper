@@ -3,7 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
     </style>
+
 
     <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/add_hamster_picture_button_color</item>
@@ -11,6 +13,29 @@
 
     <style name="Widget.ActionBar.Transparent">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <!-- Buttons -->
+    <style name="AppTheme.Button" parent="@android:style/Widget.Button">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">@dimen/medium_textsize</item>
+    </style>
+
+    <style name="AppTheme.Button.Primary">
+        <item name="android:background">@drawable/button_primary</item>
+        <item name="android:textColor">@color/add_hamster_picture_button_color</item>
+    </style>
+
+    <style name="AppTheme.Button.Secondary">
+        <item name="android:background">@drawable/button_secondary</item>
+    </style>
+
+    <style name="AppTheme.Button.Alert">
+        <item name="android:background">@drawable/button_secondary</item>
+    </style>
+
+    <style name="AppTheme.Button.Dark">
     </style>
 
 </resources>
