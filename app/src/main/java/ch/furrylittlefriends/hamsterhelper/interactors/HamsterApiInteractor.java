@@ -1,9 +1,14 @@
 package ch.furrylittlefriends.hamsterhelper.interactors;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +22,7 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -108,4 +114,9 @@ public class HamsterApiInteractor {
             }
         });*/
     }
+
+    public String uploadImage(Hamster hamster, File imageFile) {
+       return hamsterService.uploadImage(hamster.getServerId(), new TypedFile("image/jpeg", imageFile));
+    }
+
 }

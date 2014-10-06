@@ -1,18 +1,20 @@
 package ch.furrylittlefriends.hamsterhelper.jobs;
 
-import android.util.Log;
+import android.net.Uri;
 
-import com.activeandroid.query.Select;
 import com.activeandroid.query.Update;
 import com.squareup.otto.Bus;
 
-import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.util.FileUtils;
 
 /**
  * Created by fork on 04.10.14.
@@ -20,6 +22,7 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 public class AddHamsterJob extends BaseNetworkedJob {
 
     private Hamster hamsterToBeAdded;
+    private final String imageFilePath;
 
     @Inject
     transient HamsterApiInteractor hamsterApiInteractor;
@@ -27,8 +30,9 @@ public class AddHamsterJob extends BaseNetworkedJob {
     transient Bus bus;
 
 
-    public AddHamsterJob(Hamster hamsterToBeAdded) {
+    public AddHamsterJob(Hamster hamsterToBeAdded, String imageFilePath) {
         this.hamsterToBeAdded = hamsterToBeAdded;
+        this.imageFilePath = imageFilePath;
     }
 
     @Override
@@ -39,7 +43,11 @@ public class AddHamsterJob extends BaseNetworkedJob {
     public void onRun() throws Throwable {
         Hamster hamsterFromServer = hamsterApiInteractor.addHamsterSync(hamsterToBeAdded);
 
-        new Update(Hamster.class).set("serverId", hamsterToBeAdded.getServerId()).where("Id = ?", hamsterToBeAdded.getId());
+        new Update(Hamster.class).set("serverId=", hamsterFromServer.getServerId()).where("Id = ?", hamsterToBeAdded.getId());
+        if (StringUtils.isNotBlank(imageFilePath)) {
+            String imageName = hamsterApiInteractor.uploadImage(hamsterFromServer, new File(imageFilePath));
+            new Update(Hamster.class).set("image=", imageName).where("Id = ?", hamsterToBeAdded.getId());
+        }
 
         bus.post(new HamsterAddedEvent(hamsterFromServer, true));
     }

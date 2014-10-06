@@ -7,8 +7,11 @@ import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.Part;
 import retrofit.http.Path;
+import retrofit.mime.TypedFile;
 import rx.Observable;
 
 /**
@@ -31,4 +34,8 @@ public interface HamsterService {
 
     @DELETE("/api/hamsters/{id}" )
     public void deleteHamster(@Path("id") String id, Callback<Void> cb);
+
+    @Multipart
+    @POST("/api/hamsters/{id}/image")
+    public String uploadImage(@Path("id") String serverId, @Part("image")TypedFile image);
 }

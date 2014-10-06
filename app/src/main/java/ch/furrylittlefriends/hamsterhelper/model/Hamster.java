@@ -60,11 +60,17 @@ public class Hamster extends Model implements Serializable, Comparable<Hamster> 
     @Column(name = "fatherServerId")
     private String fatherServerId;
 
+    @Expose
+    @Column(name = "image")
+    private String image;
+
     @Column(name="mother")
     private Hamster mother;
 
     @Column(name="father")
     private Hamster father;
+
+
 
     // This method is optional, does not affect the foreign key creation.
     public List<Hamster> children() {
@@ -172,5 +178,13 @@ public class Hamster extends Model implements Serializable, Comparable<Hamster> 
     @Override
     public int compareTo(Hamster another) {
         return new CompareToBuilder().append(name, another.name).build();
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

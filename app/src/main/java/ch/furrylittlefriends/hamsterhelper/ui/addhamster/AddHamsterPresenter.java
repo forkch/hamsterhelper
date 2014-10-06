@@ -34,6 +34,7 @@ import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
 import ch.furrylittlefriends.hamsterhelper.jobs.AddHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.util.FileUtils;
 import ch.furrylittlefriends.hamsterhelper.views.SimpleDialog;
 import icepick.Icepick;
 import icepick.Icicle;
@@ -124,7 +125,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
         hamster.save();
 
-        jobManager.addJobInBackground(new AddHamsterJob(hamster));
+        jobManager.addJobInBackground(new AddHamsterJob(hamster, mImageCaptureUri.getPath()));
 
     }
 
@@ -231,21 +232,6 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
                 }
                 mImageCaptureUri = data.getData();
                 break;
-            /*case IMAGE_CROPPED:
-                Bitmap photo = null;
-                InputStream is = null;
-                try {
-                    is = view.getContentResolver().openInputStream(mImageCroppedUri);
-                    photo = BitmapFactory.decodeStream(is);
-
-                    cleanupFiles();
-
-                } catch (FileNotFoundException e) {
-                    Log.i(TAG, "could not find picture taken from the camera or gallery (maybe user cancelled) " + mImageCaptureUri);
-                } finally {
-                    IOUtils.closeQuietly(is);
-                }
-                break;*/
         }
         view.setHamsterImage(mImageCaptureUri);
     }
@@ -261,15 +247,4 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         }
     }
 
-    private void doCrop() {
-/*
-        mImageCroppedFile = new File(view.getCacheDir(),
-                "tmp_avatar_cropped" + String.valueOf(System.currentTimeMillis()) + ".jpg");
-        mImageCroppedUri = Uri.fromFile(mImageCroppedFile);
-
-        Intent i = new Intent(this, CropActivity.class);
-        i.putExtra(ExtraDataKeys.IMAGE_CAPTURE_URI, mImageCaptureUri);
-        i.putExtra(ExtraDataKeys.IMAGE_CROPPED_URI, mImageCroppedUri);
-        view.startActivityForResult(i, IMAGE_CROPPED);*/
-    }
 }
