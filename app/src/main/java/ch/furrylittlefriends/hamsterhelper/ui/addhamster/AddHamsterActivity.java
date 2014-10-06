@@ -22,6 +22,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.inject.Inject;
 
@@ -203,8 +204,8 @@ public class AddHamsterActivity extends BaseFragmentActivity {
         birthdaySpinner.setError(getString(R.string.error_birthday));
     }
 
-    public void addMothers(List<Hamster> hamsters) {
-        motherSpinner.setAdapter(new HamsterSpinnerAdapter(this, getHamstersByGender(hamsters, false)));
+    public void addMothers(SortedSet<Hamster> hamsters) {
+        motherSpinner.setAdapter(new HamsterSpinnerAdapter(this, getHamstersByGender(new ArrayList<Hamster>(hamsters), false)));
     }
 
 

@@ -7,6 +7,8 @@ import com.squareup.otto.Bus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersSyncedEvent;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
@@ -15,6 +17,8 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by fork on 01.09.14.
@@ -28,7 +32,6 @@ public class HamsterApiInteractor {
 
     public HamsterApiInteractor(Bus bus, RestAdapter restAdapter) {
         this.bus = bus;
-
         hamsterService = restAdapter.create(HamsterService.class);
     }
 
@@ -52,7 +55,38 @@ public class HamsterApiInteractor {
     }
 
     public void sync() {
-        hamsterService.getAllHamsters(new Callback<List<Hamster>>() {
+
+        hamsterService.getAllHamstersObs().map(new Func1<List<Hamster>, List<Hamster>>() {
+            @Override
+            public List<Hamster> call(List<Hamster> hamsters) {
+
+                Map<String, Hamster> idMap = new HashMap<String, Hamster>();
+                for (Hamster h : hamsters) {
+                    idMap.put(h.getServerId(), h);
+                    h.save();
+                }
+
+                for (Hamster h : hamsters) {
+                    h.setMother(idMap.get(h.getMotherServerId()));
+                    h.setFather(idMap.get(h.getFatherServerId()));
+                    h.save();
+                }
+
+                return hamsters;
+            }
+        }).map(new Func1<List<Hamster>, SortedSet<Hamster>>() {
+            @Override
+            public SortedSet<Hamster> call(List<Hamster> hamsters) {
+                return new TreeSet<Hamster>(hamsters);
+            }
+        }).subscribe(new Action1<SortedSet<Hamster>>() {
+            @Override
+            public void call(SortedSet<Hamster> hamsters) {
+                bus.post(new OnHamstersSyncedEvent());
+            }
+        });
+
+        /*hamsterService.getAllHamsters(new Callback<List<Hamster>>() {
             @Override
             public void success(List<Hamster> hamsters, Response response) {
 
@@ -72,6 +106,6 @@ public class HamsterApiInteractor {
             public void failure(RetrofitError error) {
 
             }
-        });
+        });*/
     }
 }

@@ -1,6 +1,8 @@
 package ch.furrylittlefriends.hamsterhelper.events;
 
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
@@ -8,13 +10,13 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
  * Created by fork on 27.09.14.
  */
 public class OnHamstersLoadedEvent {
-    private final List<Hamster> hamsters;
+    private final SortedSet<Hamster> hamsters;
 
-    public OnHamstersLoadedEvent(List<Hamster> hamsters) {
+    public OnHamstersLoadedEvent(TreeSet<Hamster> hamsters) {
         this.hamsters = hamsters;
     }
 
-    public List<Hamster> getHamsters() {
+    public SortedSet<Hamster> getHamsters() {
         return hamsters;
     }
 }

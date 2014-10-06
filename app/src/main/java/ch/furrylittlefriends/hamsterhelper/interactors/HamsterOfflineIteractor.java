@@ -6,6 +6,7 @@ import com.activeandroid.query.Select;
 import com.squareup.otto.Bus;
 
 import java.util.List;
+import java.util.TreeSet;
 
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
@@ -30,6 +31,6 @@ public class HamsterOfflineIteractor {
         List<Hamster> hamsters = new Select().from(Hamster.class).execute();
 
         Log.i(TAG, "loaded " + hamsters.size() + " hamsters from database");
-        bus.post(new OnHamstersLoadedEvent(hamsters));
+        bus.post(new OnHamstersLoadedEvent(new TreeSet<Hamster>(hamsters)));
     }
 }

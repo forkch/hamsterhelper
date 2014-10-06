@@ -8,16 +8,18 @@ import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by fork on 30.08.14.
  */
 @Table(name = "Hamsters")
-public class Hamster extends Model implements Serializable {
+public class Hamster extends Model implements Serializable, Comparable<Hamster> {
 
     private static final long serialVersionUID = 0L;
 
@@ -167,4 +169,8 @@ public class Hamster extends Model implements Serializable {
     }
 
 
+    @Override
+    public int compareTo(Hamster another) {
+        return new CompareToBuilder().append(name, another.name).build();
+    }
 }
