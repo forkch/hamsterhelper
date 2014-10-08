@@ -123,18 +123,21 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         hamster.setWeight(weight);
         hamster.setGencode(gencode);
         hamster.setBirthday(selectedBirthday);
-
-        hamster.setTempImageUri(mImageCaptureUri.toString());
+        if (mImageCaptureUri != null) {
+            hamster.setTempImageUri(mImageCaptureUri.toString());
+        }
         hamster.save();
 
         try {
-
-            FileDescriptor mInputPFD = view.getContentResolver().openFileDescriptor(mImageCaptureUri, "r").getFileDescriptor();
-            FileInputStream fileInputStream = new FileInputStream(mInputPFD);
-            File tempFile = File.createTempFile("hhh", "jpg");
-            FileUtils.copyInputStreamToFile(fileInputStream, tempFile);
-
-            jobManager.addJobInBackground(new AddHamsterJob(hamster, tempFile.getAbsolutePath()));
+            String path= null;
+            if (mImageCaptureUri != null) {
+                FileDescriptor mInputPFD = view.getContentResolver().openFileDescriptor(mImageCaptureUri, "r").getFileDescriptor();
+                FileInputStream fileInputStream = new FileInputStream(mInputPFD);
+                File tempFile = File.createTempFile("hhh", "jpg");
+                FileUtils.copyInputStreamToFile(fileInputStream, tempFile);
+                path = tempFile.getAbsolutePath();
+            }
+            jobManager.addJobInBackground(new AddHamsterJob(hamster, path));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
