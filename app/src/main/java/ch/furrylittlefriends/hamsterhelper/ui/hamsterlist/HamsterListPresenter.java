@@ -68,12 +68,12 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonLi
     }
 
     @Subscribe
-    public void onHamstersSync(final OnHamstersSyncedEvent e) {
+    public void onHamstersSynced(final OnHamstersSyncedEvent e) {
         loadHamsters();
     }
 
     @Subscribe
-    public void onHamstersLoaded(final OnHamstersLoadedEvent e) {
+    public void onHasmstersLoaded(final OnHamstersLoadedEvent e) {
         hamsterListAdapter.clear();
         hamsterListAdapter.addAll(e.getHamsters());
         view.onHamstersLoaded();

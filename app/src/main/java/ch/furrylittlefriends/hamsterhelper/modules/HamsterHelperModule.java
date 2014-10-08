@@ -127,7 +127,7 @@ public class HamsterHelperModule {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setConverter(converter)
                 .setEndpoint(BuildConfig.ENDPOINT)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setLog(new AndroidLog("REST: "))
                 .build();
         return restAdapter;

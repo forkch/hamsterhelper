@@ -3,6 +3,8 @@ package ch.furrylittlefriends.hamsterhelper.ui.addhamster;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,7 +17,6 @@ import android.widget.Toast;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
-import com.path.android.jobqueue.Job;
 import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -25,7 +26,13 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
@@ -34,7 +41,6 @@ import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
 import ch.furrylittlefriends.hamsterhelper.jobs.AddHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
-import ch.furrylittlefriends.hamsterhelper.util.FileUtils;
 import ch.furrylittlefriends.hamsterhelper.views.SimpleDialog;
 import icepick.Icepick;
 import icepick.Icicle;
@@ -58,9 +64,9 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
     private DateTimeFormatter formatter;
     @Icicle
-     File mImageCaptureFile;
+    File mImageCaptureFile;
     @Icicle
-     Uri mImageCaptureUri;
+    Uri mImageCaptureUri;
 
     private static final String STATE_CAPTURE_URI = "STATE_CAPTURE_URI";
     private static final String STATE_CROPPED_URI = "STATE_CROPPED_URI";
@@ -72,7 +78,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     private File mImageCroppedFile;
     private Uri mImageCroppedUri;
 
-    public AddHamsterPresenter(AddHamsterActivity view, HamsterOfflineIteractor hamsterOfflineIteractor,HamsterApiInteractor hamsterApiInteractor, Bus bus, JobManager jobManager) {
+    public AddHamsterPresenter(AddHamsterActivity view, HamsterOfflineIteractor hamsterOfflineIteractor, HamsterApiInteractor hamsterApiInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
         this.hamsterOfflineIteractor = hamsterOfflineIteractor;
         this.hamsterApiInteractor = hamsterApiInteractor;
@@ -123,10 +129,35 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         hamster.setGencode(gencode);
         hamster.setBirthday(selectedBirthday);
 
+        hamster.setTempImage(mImageCaptureUri);
         hamster.save();
 
-        jobManager.addJobInBackground(new AddHamsterJob(hamster, mImageCaptureUri.getPath()));
 
+        InputStream input = null;
+        try {
+
+            input = view.getContentResolver().openInputStream(mImageCaptureUri);
+            Bitmap bmp = BitmapFactory.decodeStream(input);
+
+            FileDescriptor mInputPFD = view.getContentResolver().openFileDescriptor(mImageCaptureUri, "r").getFileDescriptor();
+            FileInputStream fileInputStream = new FileInputStream(mInputPFD);
+            File tempFile = File.createTempFile("hhh", "image");
+            org.apache.commons.io.FileUtils.copyInputStreamToFile(fileInputStream, tempFile);
+            jobManager.addJobInBackground(new AddHamsterJob(hamster, bitmapToByte(bmp, 100), tempFile.getAbsolutePath()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static byte[] bitmapToByte(Bitmap bitmap, int compressionRatio) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compressionRatio, baos);
+        baos.flush();
+        baos.close();
+        return baos.toByteArray();
     }
 
     public void showWeightPicker() {

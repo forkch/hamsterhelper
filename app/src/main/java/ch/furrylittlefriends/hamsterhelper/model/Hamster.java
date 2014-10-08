@@ -1,5 +1,7 @@
 package ch.furrylittlefriends.hamsterhelper.model;
 
+import android.net.Uri;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -70,6 +72,7 @@ public class Hamster extends Model implements Serializable, Comparable<Hamster> 
     @Column(name="father")
     private Hamster father;
 
+    private transient Uri tempImage;
 
 
     // This method is optional, does not affect the foreign key creation.
@@ -186,5 +189,13 @@ public class Hamster extends Model implements Serializable, Comparable<Hamster> 
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setTempImage(Uri tempImage) {
+        this.tempImage = tempImage;
+    }
+
+    public Uri getTempImage() {
+        return tempImage;
     }
 }

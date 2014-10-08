@@ -1,20 +1,15 @@
 package ch.furrylittlefriends.hamsterhelper.jobs;
 
-import android.net.Uri;
-
 import com.activeandroid.query.Update;
 import com.squareup.otto.Bus;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.File;
+import java.io.FileDescriptor;
 
 import javax.inject.Inject;
 
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
-import ch.furrylittlefriends.hamsterhelper.util.FileUtils;
 
 /**
  * Created by fork on 04.10.14.
@@ -22,7 +17,8 @@ import ch.furrylittlefriends.hamsterhelper.util.FileUtils;
 public class AddHamsterJob extends BaseNetworkedJob {
 
     private Hamster hamsterToBeAdded;
-    private final String imageFilePath;
+    private final byte[] bitmap;
+    private final String fileDescriptor;
 
     @Inject
     transient HamsterApiInteractor hamsterApiInteractor;
@@ -30,13 +26,15 @@ public class AddHamsterJob extends BaseNetworkedJob {
     transient Bus bus;
 
 
-    public AddHamsterJob(Hamster hamsterToBeAdded, String imageFilePath) {
+    public AddHamsterJob(Hamster hamsterToBeAdded, byte[] bitmap, String path) {
         this.hamsterToBeAdded = hamsterToBeAdded;
-        this.imageFilePath = imageFilePath;
+        this.bitmap = bitmap;
+        this.fileDescriptor = path;
     }
 
     @Override
     public void onAdded() {
+        bus.post(new HamsterAddedEvent(hamsterToBeAdded, false));
     }
 
     @Override
@@ -44,11 +42,14 @@ public class AddHamsterJob extends BaseNetworkedJob {
         Hamster hamsterFromServer = hamsterApiInteractor.addHamsterSync(hamsterToBeAdded);
 
         new Update(Hamster.class).set("serverId=", hamsterFromServer.getServerId()).where("Id = ?", hamsterToBeAdded.getId());
-        if (StringUtils.isNotBlank(imageFilePath)) {
-            String imageName = hamsterApiInteractor.uploadImage(hamsterFromServer, new File(imageFilePath));
+        /*if (bitmap != null) {
+            String imageName = hamsterApiInteractor.uploadImage(hamsterFromServer, bitmap);
+            new Update(Hamster.class).set("image=", imageName).where("Id = ?", hamsterToBeAdded.getId());
+        }*/
+        if (fileDescriptor != null) {
+            String imageName = hamsterApiInteractor.uploadImage(hamsterFromServer, fileDescriptor);
             new Update(Hamster.class).set("image=", imageName).where("Id = ?", hamsterToBeAdded.getId());
         }
-
         bus.post(new HamsterAddedEvent(hamsterFromServer, true));
     }
 
@@ -59,7 +60,7 @@ public class AddHamsterJob extends BaseNetworkedJob {
 
     @Override
     protected boolean shouldReRunOnThrowable(Throwable throwable) {
-        return true;
+        return false;
     }
 
 }

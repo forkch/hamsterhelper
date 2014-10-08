@@ -28,6 +28,7 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
  */
 public class HamsterListAdapter extends ArrayAdapter<Hamster> {
 
+    private static final String TAG = HamsterListAdapter.class.getSimpleName();
     private Context context;
     private final OnDeleteButtonListener deleteButtonListener;
     private final DateTimeFormatter dateTimeFormatter;
@@ -57,10 +58,19 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster> {
         Hamster hamster = getItem(position);
 
         if (StringUtils.isNotBlank(hamster.getImage())) {
-            String imageUrl = BuildConfig.ENDPOINT + "api/hamsters/" + hamster.getServerId() + "/image/" + hamster.getImage();
-            Log.i("", imageUrl);
+            String imageUrl = "";
+            if (!BuildConfig.IS_S3) {
+                imageUrl = BuildConfig.ENDPOINT + "api/hamsters/" + hamster.getServerId() + "/image/" + hamster.getImage();
+            } else {
+                imageUrl = BuildConfig.HAMSTER_IMAGE_ENDPOINT_S3 + hamster.getImage();
+            }
+                Log.i(TAG, "loading hamster image from " + imageUrl);
             Picasso.with(context).load(imageUrl).fit().centerCrop().into(imageView);
+        } else if (hamster.getTempImage() != null) {
+            Log.i(TAG, "setting temporary image " + hamster.getTempImage());
+            Picasso.with(context).load(hamster.getTempImage()).fit().centerCrop().into(imageView);
         } else {
+            Log.i(TAG, "setting default image");
             Picasso.with(context).load(R.drawable.hamster_image).fit().centerCrop().into(imageView);
         }
         nameTextView.setText(hamster.getName());

@@ -11,6 +11,7 @@ import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Path;
+import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedFile;
 import rx.Observable;
 
@@ -34,6 +35,10 @@ public interface HamsterService {
 
     @DELETE("/api/hamsters/{id}" )
     public void deleteHamster(@Path("id") String id, Callback<Void> cb);
+
+    @Multipart
+    @POST("/api/hamsters/{id}/image")
+    public String uploadImage(@Path("id") String serverId, @Part("image")TypedByteArray image);
 
     @Multipart
     @POST("/api/hamsters/{id}/image")
