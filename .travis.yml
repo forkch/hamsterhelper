@@ -12,6 +12,6 @@ deploy:
   bucket: hamsterhelper
   skip_cleanup: true
   acl: !ruby/string:HighLine::String private
-  local-dir: app/build/outputs/apk
+  local-dir: app/build/outputs/apk/app-developmentHeroku-debug.apk
   on:
     repo: forkch/hamsterhelper
