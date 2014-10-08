@@ -3,8 +3,6 @@ package ch.furrylittlefriends.hamsterhelper.ui.addhamster;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,18 +19,17 @@ import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
@@ -75,8 +72,6 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_FILE = 2;
     private static final int IMAGE_CROPPED = 3;
-    private File mImageCroppedFile;
-    private Uri mImageCroppedUri;
 
     public AddHamsterPresenter(AddHamsterActivity view, HamsterOfflineIteractor hamsterOfflineIteractor, HamsterApiInteractor hamsterApiInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
@@ -129,35 +124,23 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         hamster.setGencode(gencode);
         hamster.setBirthday(selectedBirthday);
 
-        hamster.setTempImage(mImageCaptureUri);
+        hamster.setTempImageUri(mImageCaptureUri.toString());
         hamster.save();
 
-
-        InputStream input = null;
         try {
-
-            input = view.getContentResolver().openInputStream(mImageCaptureUri);
-            Bitmap bmp = BitmapFactory.decodeStream(input);
 
             FileDescriptor mInputPFD = view.getContentResolver().openFileDescriptor(mImageCaptureUri, "r").getFileDescriptor();
             FileInputStream fileInputStream = new FileInputStream(mInputPFD);
-            File tempFile = File.createTempFile("hhh", "image");
-            org.apache.commons.io.FileUtils.copyInputStreamToFile(fileInputStream, tempFile);
-            jobManager.addJobInBackground(new AddHamsterJob(hamster, bitmapToByte(bmp, 100), tempFile.getAbsolutePath()));
+            File tempFile = File.createTempFile("hhh", "jpg");
+            FileUtils.copyInputStreamToFile(fileInputStream, tempFile);
+
+            jobManager.addJobInBackground(new AddHamsterJob(hamster, tempFile.getAbsolutePath()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    }
-
-    public static byte[] bitmapToByte(Bitmap bitmap, int compressionRatio) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressionRatio, baos);
-        baos.flush();
-        baos.close();
-        return baos.toByteArray();
     }
 
     public void showWeightPicker() {
@@ -270,12 +253,8 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     private void cleanupFiles() {
         if (mImageCaptureFile != null && mImageCaptureFile.exists()) {
             mImageCaptureFile.delete();
-            mImageCaptureUri = null;
         }
-        if (mImageCroppedFile != null && mImageCroppedFile.exists()) {
-            mImageCroppedFile.delete();
-            mImageCaptureUri = null;
-        }
+        mImageCaptureUri = null;
     }
 
 }

@@ -1,12 +1,8 @@
 package ch.furrylittlefriends.hamsterhelper.model;
 
-import android.net.Uri;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Update;
-import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +10,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -72,8 +67,8 @@ public class Hamster extends Model implements Serializable, Comparable<Hamster> 
     @Column(name="father")
     private Hamster father;
 
-    private transient Uri tempImage;
-
+    @Column(name="tempImageUri")
+    private String tempImageUri;
 
     // This method is optional, does not affect the foreign key creation.
     public List<Hamster> children() {
@@ -191,11 +186,11 @@ public class Hamster extends Model implements Serializable, Comparable<Hamster> 
         this.image = image;
     }
 
-    public void setTempImage(Uri tempImage) {
-        this.tempImage = tempImage;
+    public String getTempImageUri() {
+        return tempImageUri;
     }
 
-    public Uri getTempImage() {
-        return tempImage;
+    public void setTempImageUri(String tempUri) {
+        this.tempImageUri = tempUri;
     }
 }

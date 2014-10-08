@@ -17,7 +17,6 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 public class AddHamsterJob extends BaseNetworkedJob {
 
     private Hamster hamsterToBeAdded;
-    private final byte[] bitmap;
     private final String fileDescriptor;
 
     @Inject
@@ -26,9 +25,8 @@ public class AddHamsterJob extends BaseNetworkedJob {
     transient Bus bus;
 
 
-    public AddHamsterJob(Hamster hamsterToBeAdded, byte[] bitmap, String path) {
+    public AddHamsterJob(Hamster hamsterToBeAdded, String path) {
         this.hamsterToBeAdded = hamsterToBeAdded;
-        this.bitmap = bitmap;
         this.fileDescriptor = path;
     }
 
@@ -42,10 +40,6 @@ public class AddHamsterJob extends BaseNetworkedJob {
         Hamster hamsterFromServer = hamsterApiInteractor.addHamsterSync(hamsterToBeAdded);
 
         new Update(Hamster.class).set("serverId=", hamsterFromServer.getServerId()).where("Id = ?", hamsterToBeAdded.getId());
-        /*if (bitmap != null) {
-            String imageName = hamsterApiInteractor.uploadImage(hamsterFromServer, bitmap);
-            new Update(Hamster.class).set("image=", imageName).where("Id = ?", hamsterToBeAdded.getId());
-        }*/
         if (fileDescriptor != null) {
             String imageName = hamsterApiInteractor.uploadImage(hamsterFromServer, fileDescriptor);
             new Update(Hamster.class).set("image=", imageName).where("Id = ?", hamsterToBeAdded.getId());

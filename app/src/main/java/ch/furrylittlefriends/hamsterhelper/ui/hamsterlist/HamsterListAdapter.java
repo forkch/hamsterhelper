@@ -57,23 +57,8 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster> {
         TextView parents = (TextView) rowView.findViewById(R.id.hamsterParents);
         Hamster hamster = getItem(position);
 
-        if (StringUtils.isNotBlank(hamster.getImage())) {
-            String imageUrl = "";
-            Log.i(TAG, ""+BuildConfig.IS_S3);
-            if (!BuildConfig.IS_S3) {
-                imageUrl = BuildConfig.ENDPOINT + "api/hamsters/" + hamster.getServerId() + "/image/" + hamster.getImage();
-            } else {
-                imageUrl = BuildConfig.HAMSTER_IMAGE_ENDPOINT_S3 + hamster.getImage();
-            }
-            Log.i(TAG, "loading hamster image from " + imageUrl);
-            Picasso.with(context).load(imageUrl).fit().centerCrop().into(imageView);
-        } else if (hamster.getTempImage() != null) {
-            Log.i(TAG, "setting temporary image " + hamster.getTempImage());
-            Picasso.with(context).load(hamster.getTempImage()).fit().centerCrop().into(imageView);
-        } else {
-            Log.i(TAG, "setting default image");
-            Picasso.with(context).load(R.drawable.hamster_image).fit().centerCrop().into(imageView);
-        }
+        setHamsterImage(imageView, hamster);
+
         nameTextView.setText(hamster.getName());
 
         if (hamster.getMother() != null && hamster.getFather() != null) {
@@ -100,6 +85,27 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster> {
 
 
         return rowView;
+    }
+
+    private void setHamsterImage(ImageView imageView, Hamster hamster) {
+        String tempUri = hamster.getTempImageUri();
+        if (StringUtils.isNotBlank(tempUri)) {
+            Log.i(TAG, "setting temporary image " + tempUri);
+            Picasso.with(context).load(tempUri).fit().centerCrop().into(imageView);
+        } else if (StringUtils.isNotBlank(hamster.getImage())) {
+            String imageUrl = "";
+            Log.i(TAG, "" + BuildConfig.IS_S3);
+            if (!BuildConfig.IS_S3) {
+                imageUrl = BuildConfig.ENDPOINT + "api/hamsters/" + hamster.getServerId() + "/image/" + hamster.getImage();
+            } else {
+                imageUrl = BuildConfig.HAMSTER_IMAGE_ENDPOINT_S3 + hamster.getImage();
+            }
+            Log.i(TAG, "loading hamster image from " + imageUrl);
+            Picasso.with(context).load(imageUrl).fit().centerCrop().into(imageView);
+        } else {
+            Log.i(TAG, "setting default image");
+            Picasso.with(context).load(R.drawable.hamster_image).fit().centerCrop().into(imageView);
+        }
     }
 
     public interface OnDeleteButtonListener {
