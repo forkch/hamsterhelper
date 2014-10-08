@@ -10,11 +10,13 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.google.common.collect.Sets;
 import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -30,6 +32,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Set;
 
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
@@ -48,11 +51,15 @@ import icepick.Icicle;
 public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, NumberPickerDialogFragment.NumberPickerDialogHandler {
     private static final String TAG = AddHamsterPresenter.class.getSimpleName();
     public static final String VAL_BIRTHDAY = "VAL_BIRTHDAY";
+
+    private static final Set<String> VALID_IMAGE_MIME_TYPES = Sets.newHashSet("image/jpeg", "image/jpg", "image/png", "image/bmp");
+
     private AddHamsterActivity view;
     private final HamsterOfflineIteractor hamsterOfflineIteractor;
     private HamsterApiInteractor hamsterApiInteractor;
     private Bus bus;
     private final JobManager jobManager;
+
 
     @Icicle
     DateTime selectedBirthday;
@@ -60,7 +67,6 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
     double weight = 0;
 
     private DateTimeFormatter formatter;
-    @Icicle
     File mImageCaptureFile;
     @Icicle
     Uri mImageCaptureUri;
@@ -129,7 +135,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
         hamster.save();
 
         try {
-            String path= null;
+            String path = null;
             if (mImageCaptureUri != null) {
                 FileDescriptor mInputPFD = view.getContentResolver().openFileDescriptor(mImageCaptureUri, "r").getFileDescriptor();
                 FileInputStream fileInputStream = new FileInputStream(mInputPFD);
@@ -184,6 +190,7 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         Icepick.restoreInstanceState(this, savedInstanceState);
+        view.setHamsterImage(mImageCaptureUri);
     }
 
     public void selectPicture() {
@@ -230,7 +237,19 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
                 view.startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);
             }
-        }).show();
+        })
+                .setSecondaryButton("Select from Filemanager", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+
+                        intent.setType("file/*");
+                        intent.putExtra("return-data", false);
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                        view.startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);
+                    }
+                }).show();
     }
 
     public void processResult(int requestCode, int resultCode, Intent data) {
@@ -239,18 +258,34 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
             return;
         }
 
-        switch (requestCode) {
-            case PICK_FROM_CAMERA:
-                break;
-            case PICK_FROM_FILE:
-                if (data == null) {
-                    Log.i(TAG, "user cancelled taking picture from gallery");
-                    return;
-                }
-                mImageCaptureUri = data.getData();
-                break;
+        if (requestCode == PICK_FROM_FILE) {
+            if (data == null) {
+                Log.i(TAG, "user cancelled taking picture from gallery");
+                return;
+            }
+            mImageCaptureUri = data.getData();
         }
-        view.setHamsterImage(mImageCaptureUri);
+
+        Log.i(TAG, "URI of image: " + mImageCaptureUri.toString());
+        String scheme = mImageCaptureUri.getScheme();
+        String type = "";
+        if(StringUtils.contains(scheme, "content")) {
+            type = view.getContentResolver().getType(mImageCaptureUri);
+        }else {
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            type = mimeTypeMap.getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(mImageCaptureUri.toString().toLowerCase()));
+        }
+        if (checkMimeType(type)) {
+            view.setHamsterImage(mImageCaptureUri);
+        }
+    }
+
+    private boolean checkMimeType(String type) {
+        for (String validImageMimeType : VALID_IMAGE_MIME_TYPES) {
+            if (StringUtils.contains(type, validImageMimeType))
+                return true;
+        }
+        return false;
     }
 
     private void cleanupFiles() {
