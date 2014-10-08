@@ -1,5 +1,5 @@
 language: android
-script: "./gradlew clean build"
+script: "./gradlew clean assembleDevelopmentHerokuDebug"
 android:
   components:
   - build-tools-20.0.0
