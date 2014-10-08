@@ -59,12 +59,13 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster> {
 
         if (StringUtils.isNotBlank(hamster.getImage())) {
             String imageUrl = "";
+            Log.i(TAG, ""+BuildConfig.IS_S3);
             if (!BuildConfig.IS_S3) {
                 imageUrl = BuildConfig.ENDPOINT + "api/hamsters/" + hamster.getServerId() + "/image/" + hamster.getImage();
             } else {
                 imageUrl = BuildConfig.HAMSTER_IMAGE_ENDPOINT_S3 + hamster.getImage();
             }
-                Log.i(TAG, "loading hamster image from " + imageUrl);
+            Log.i(TAG, "loading hamster image from " + imageUrl);
             Picasso.with(context).load(imageUrl).fit().centerCrop().into(imageView);
         } else if (hamster.getTempImage() != null) {
             Log.i(TAG, "setting temporary image " + hamster.getTempImage());
