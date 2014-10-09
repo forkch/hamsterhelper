@@ -1,5 +1,6 @@
 package ch.furrylittlefriends.hamsterhelper.ui.hamsterlist;
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import java.util.List;
 import ch.furrylittlefriends.hamsterhelper.BuildConfig;
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.util.HamsterImageHelper;
 
 /**
  * Created by fork on 30.08.14.
@@ -29,20 +31,20 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 public class HamsterListAdapter extends ArrayAdapter<Hamster> {
 
     private static final String TAG = HamsterListAdapter.class.getSimpleName();
-    private Context context;
-    private final OnDeleteButtonListener deleteButtonListener;
+    private ListActivity context;
+    private final HamsterListRowListener hamsterListRowListener;
     private final DateTimeFormatter dateTimeFormatter;
 
 
-    public HamsterListAdapter(Context context, List<Hamster> hamsterList, OnDeleteButtonListener deleteButtonListener) {
+    public HamsterListAdapter(ListActivity context, List<Hamster> hamsterList, HamsterListRowListener hamsterListRowListener) {
         super(context, R.layout.hamster_list_row, hamsterList);
         this.context = context;
-        this.deleteButtonListener = deleteButtonListener;
+        this.hamsterListRowListener = hamsterListRowListener;
         dateTimeFormatter = DateTimeFormat.forPattern(context.getString(R.string.birthday_date_format));
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView;
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context
@@ -57,7 +59,7 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster> {
         TextView parents = (TextView) rowView.findViewById(R.id.hamsterParents);
         Hamster hamster = getItem(position);
 
-        setHamsterImage(imageView, hamster);
+        HamsterImageHelper.setHamsterImage(context, imageView, hamster);
 
         nameTextView.setText(hamster.getName());
 
@@ -79,36 +81,23 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteButtonListener.onDelete(view);
+                hamsterListRowListener.onDelete(view);
             }
         });
-
-
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hamsterListRowListener.onHamsterClick(position);
+            }
+        });
         return rowView;
     }
 
-    private void setHamsterImage(ImageView imageView, Hamster hamster) {
-        String tempUri = hamster.getTempImageUri();
-        if (StringUtils.isNotBlank(tempUri)) {
-            Log.i(TAG, "setting temporary image " + tempUri);
-            Picasso.with(context).load(tempUri).fit().centerCrop().into(imageView);
-        } else if (StringUtils.isNotBlank(hamster.getImage())) {
-            String imageUrl = "";
-            Log.i(TAG, "" + BuildConfig.IS_S3);
-            if (!BuildConfig.IS_S3) {
-                imageUrl = BuildConfig.ENDPOINT + "api/hamsters/" + hamster.getServerId() + "/image/" + hamster.getImage();
-            } else {
-                imageUrl = BuildConfig.HAMSTER_IMAGE_ENDPOINT_S3 + hamster.getImage();
-            }
-            Log.i(TAG, "loading hamster image from " + imageUrl);
-            Picasso.with(context).load(imageUrl).fit().centerCrop().into(imageView);
-        } else {
-            Log.i(TAG, "setting default image");
-            Picasso.with(context).load(R.drawable.hamster_image).fit().centerCrop().into(imageView);
-        }
-    }
 
-    public interface OnDeleteButtonListener {
+
+    public interface HamsterListRowListener {
         public void onDelete(View view);
+
+        void onHamsterClick(int position);
     }
 }

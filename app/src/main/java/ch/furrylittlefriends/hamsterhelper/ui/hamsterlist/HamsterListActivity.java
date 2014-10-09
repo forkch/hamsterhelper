@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.button_floating_action);
         floatingActionButton.attachToListView(listView);
+
     }
 
     @Override
@@ -62,7 +64,6 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
         presenter.onResume();
         presenter.loadHamsters();
     }
-
 
     @Override
     protected void onStop() {

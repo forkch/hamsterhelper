@@ -75,7 +75,7 @@ public class AddHamsterActivity extends BaseFragmentActivity {
 
         FadingActionBarHelper helper = new FadingActionBarHelper()
                 .actionBarBackground(R.color.add_hamster_picture_button_color)
-                .headerLayout(R.layout.add_hamster_header)
+                .headerLayout(R.layout.header_hamster_image)
                 .contentLayout(R.layout.activity_add_hamster)
                 .headerOverlayLayout(R.layout.add_picture_overlay);
         setContentView(helper.createView(this));

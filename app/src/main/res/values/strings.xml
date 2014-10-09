@@ -32,4 +32,7 @@
         <item>Ad Pepe</item>
         <item>dd Pepe</item>
     </string-array>
+
+    <string name="title_activity_view_hamster">ViewHamsterActivity</string>
+
 </resources>

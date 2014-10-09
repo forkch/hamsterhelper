@@ -1,5 +1,6 @@
 package ch.furrylittlefriends.hamsterhelper.ui.hamsterlist;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,12 +21,14 @@ import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
 import ch.furrylittlefriends.hamsterhelper.jobs.DeleteHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.jobs.HamsterSyncJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.ui.ExtraDataKeys;
+import ch.furrylittlefriends.hamsterhelper.ui.viewhamster.ViewHamsterActivity;
 import ch.furrylittlefriends.hamsterhelper.util.NetworkHelper;
 
 /**
  * Created by fork on 01.09.14.
  */
-public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonListener {
+public class HamsterListPresenter implements HamsterListAdapter.HamsterListRowListener {
     private static String TAG = HamsterListPresenter.class.getSimpleName();
     private HamsterListActivity view;
     private final HamsterOfflineIteractor hamsterOfflineIteractor;
@@ -108,5 +111,14 @@ public class HamsterListPresenter implements HamsterListAdapter.OnDeleteButtonLi
             return;
         }
         deleteHamster(hamster);
+    }
+
+    @Override
+    public void onHamsterClick(int position) {
+        Hamster hamster = hamsterListAdapter.getItem(position);
+
+        Intent viewHamsterIntent = new Intent(view, ViewHamsterActivity.class);
+        viewHamsterIntent.putExtra(ExtraDataKeys.HAMSTER, hamster);
+        view.startActivity(viewHamsterIntent);
     }
 }
