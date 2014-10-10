@@ -22,6 +22,7 @@ import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.modules.HamsterListModule;
 import ch.furrylittlefriends.hamsterhelper.ui.BaseListActivity;
+import ch.furrylittlefriends.hamsterhelper.ui.SettingsActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
 
 public class HamsterListActivity extends BaseListActivity implements SwipeRefreshLayout.OnRefreshListener {
@@ -87,6 +88,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

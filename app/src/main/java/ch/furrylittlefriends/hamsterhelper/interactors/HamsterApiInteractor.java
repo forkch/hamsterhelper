@@ -2,6 +2,7 @@ package ch.furrylittlefriends.hamsterhelper.interactors;
 
 import android.util.Log;
 
+import com.activeandroid.query.Delete;
 import com.squareup.otto.Bus;
 
 import java.io.File;
@@ -63,6 +64,7 @@ public class HamsterApiInteractor {
             @Override
             public List<Hamster> call(List<Hamster> hamsters) {
 
+                new Delete().from(Hamster.class).execute();
                 Map<String, Hamster> idMap = new HashMap<String, Hamster>();
                 for (Hamster h : hamsters) {
                     idMap.put(h.getServerId(), h);

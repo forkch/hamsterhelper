@@ -28,7 +28,6 @@ public class HamsterSyncJob extends BaseNetworkedJob {
 
     @Override
     public void onRun() throws Throwable {
-        new Delete().from(Hamster.class).execute();
         hamsterApiInteractor.sync();
     }
 
