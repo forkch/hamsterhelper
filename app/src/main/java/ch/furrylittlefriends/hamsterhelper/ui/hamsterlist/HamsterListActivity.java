@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.bugsnag.android.Bugsnag;
 import com.melnykov.fab.FloatingActionButton;
 
 import javax.inject.Inject;
@@ -21,7 +22,7 @@ import butterknife.OnClick;
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.modules.HamsterListModule;
-import ch.furrylittlefriends.hamsterhelper.ui.BaseListActivity;
+import ch.furrylittlefriends.hamsterhelper.ui.base.BaseListActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.SettingsActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
 
@@ -56,6 +57,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.button_floating_action);
         floatingActionButton.attachToListView(listView);
+        Bugsnag.notify(new RuntimeException("test"));
 
     }
 

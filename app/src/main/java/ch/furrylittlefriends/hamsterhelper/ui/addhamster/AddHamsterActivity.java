@@ -32,7 +32,7 @@ import butterknife.OnClick;
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.modules.AddHamsterModule;
-import ch.furrylittlefriends.hamsterhelper.ui.BaseFragmentActivity;
+import ch.furrylittlefriends.hamsterhelper.ui.base.BaseFragmentActivity;
 import icepick.Icepick;
 
 public class AddHamsterActivity extends BaseFragmentActivity {
