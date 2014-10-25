@@ -1,4 +1,4 @@
-package ch.furrylittlefriends.hamsterhelper.interactors;
+package ch.furrylittlefriends.hamsterhelper.repository;
 
 import android.util.Log;
 
@@ -10,27 +10,41 @@ import java.util.TreeSet;
 
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
-import ch.furrylittlefriends.hamsterhelper.services.HamsterService;
-import retrofit.RestAdapter;
 
 /**
  * Created by fork on 05.10.14.
  */
-public class HamsterOfflineIteractor {
+public class HamsterDatabaseRepository implements HamsterRepository {
 
-    private static final String TAG = HamsterOfflineIteractor.class.getSimpleName();
+    private static final String TAG = HamsterDatabaseRepository.class.getSimpleName();
 
     private final Bus bus;
 
-    public HamsterOfflineIteractor(Bus bus) {
+    public HamsterDatabaseRepository(Bus bus) {
         this.bus = bus;
     }
 
-    public void getAllHamsters() {
+    @Override
+    public void getAllHamters() {
         Log.i(TAG, "loading hamsters from database");
         List<Hamster> hamsters = new Select().from(Hamster.class).execute();
 
         Log.i(TAG, "loaded " + hamsters.size() + " hamsters from database");
         bus.post(new OnHamstersLoadedEvent(new TreeSet<Hamster>(hamsters)));
+    }
+
+    @Override
+    public Hamster storeHamster(Hamster hamster) {
+        return null;
+    }
+
+    @Override
+    public void deleteHamster(Hamster hamster) {
+
+    }
+
+    @Override
+    public String saveHamsterImage(Hamster hamster, String path) {
+        return null;
     }
 }

@@ -5,8 +5,8 @@ import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
 
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterDatabaseRepository;
 import ch.furrylittlefriends.hamsterhelper.ui.hamsterlist.HamsterListActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.hamsterlist.HamsterListPresenter;
 import dagger.Module;
@@ -34,7 +34,7 @@ public class HamsterListModule {
 
     @Provides
     @Singleton
-    public HamsterListPresenter providePresenter(HamsterListActivity view, HamsterOfflineIteractor hamsterOfflineIteractor, HamsterApiInteractor hamsterListInteractor, Bus bus, JobManager jobManager) {
+    public HamsterListPresenter providePresenter(HamsterListActivity view, HamsterDatabaseRepository hamsterOfflineIteractor, HamsterCloudRepository hamsterListInteractor, Bus bus, JobManager jobManager) {
         return new HamsterListPresenter(view, hamsterOfflineIteractor, hamsterListInteractor, bus, jobManager);
     }
 }

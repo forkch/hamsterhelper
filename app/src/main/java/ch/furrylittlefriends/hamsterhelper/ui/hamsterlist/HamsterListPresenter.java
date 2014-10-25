@@ -16,8 +16,8 @@ import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersSyncedEvent;
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterDatabaseRepository;
 import ch.furrylittlefriends.hamsterhelper.jobs.DeleteHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.jobs.HamsterSyncJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
@@ -31,13 +31,13 @@ import ch.furrylittlefriends.hamsterhelper.util.NetworkHelper;
 public class HamsterListPresenter implements HamsterListAdapter.HamsterListRowListener {
     private static String TAG = HamsterListPresenter.class.getSimpleName();
     private HamsterListActivity view;
-    private final HamsterOfflineIteractor hamsterOfflineIteractor;
-    private HamsterApiInteractor hamsterApiInteractor;
+    private final HamsterDatabaseRepository hamsterOfflineIteractor;
+    private HamsterCloudRepository hamsterApiInteractor;
     private Bus bus;
     private final JobManager jobManager;
     private final HamsterListAdapter hamsterListAdapter;
 
-    public HamsterListPresenter(final HamsterListActivity view, HamsterOfflineIteractor hamsterOfflineIteractor, HamsterApiInteractor hamsterListInteractor, Bus bus, JobManager jobManager) {
+    public HamsterListPresenter(final HamsterListActivity view, HamsterDatabaseRepository hamsterOfflineIteractor, HamsterCloudRepository hamsterListInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
         this.hamsterOfflineIteractor = hamsterOfflineIteractor;
         this.hamsterApiInteractor = hamsterListInteractor;
@@ -67,7 +67,7 @@ public class HamsterListPresenter implements HamsterListAdapter.HamsterListRowLi
     }
 
     public void loadHamsters() {
-        hamsterOfflineIteractor.getAllHamsters();
+        hamsterOfflineIteractor.getAllHamters();
     }
 
     @Subscribe

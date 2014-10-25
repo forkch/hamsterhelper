@@ -1,13 +1,11 @@
 package ch.furrylittlefriends.hamsterhelper.modules;
 
-import com.path.android.jobqueue.Job;
-import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
 
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterDatabaseRepository;
 import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;
@@ -20,13 +18,13 @@ public class InteractorsModule {
 
     @Provides
     @Singleton
-    public HamsterApiInteractor provideHamsterListInteractor(Bus bus, RestAdapter restAdapter) {
-        return new HamsterApiInteractor(bus, restAdapter);
+    public HamsterCloudRepository provideHamsterListInteractor(Bus bus, RestAdapter restAdapter) {
+        return new HamsterCloudRepository(bus, restAdapter);
     }
 
     @Provides
     @Singleton
-    public HamsterOfflineIteractor provideHamsterListInteractor(Bus bus) {
-        return new HamsterOfflineIteractor(bus);
+    public HamsterDatabaseRepository provideHamsterListInteractor(Bus bus) {
+        return new HamsterDatabaseRepository(bus);
     }
 }

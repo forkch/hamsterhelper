@@ -1,4 +1,4 @@
-package ch.furrylittlefriends.hamsterhelper.interactors;
+package ch.furrylittlefriends.hamsterhelper.repository;
 
 import android.util.Log;
 
@@ -27,23 +27,19 @@ import rx.functions.Func1;
 /**
  * Created by fork on 01.09.14.
  */
-public class HamsterApiInteractor {
+public class HamsterCloudRepository implements HamsterRepository {
 
-    private static final String TAG = HamsterApiInteractor.class.getSimpleName();
+    private static final String TAG = HamsterCloudRepository.class.getSimpleName();
 
     private final HamsterService hamsterService;
     private final Bus bus;
 
-    public HamsterApiInteractor(Bus bus, RestAdapter restAdapter) {
+    public HamsterCloudRepository(Bus bus, RestAdapter restAdapter) {
         this.bus = bus;
         hamsterService = restAdapter.create(HamsterService.class);
     }
 
-
-    public Hamster addHamsterSync(Hamster hamster) {
-        return hamsterService.addHamster(hamster);
-    }
-
+    @Override
     public void deleteHamster(final Hamster hamster) {
         hamsterService.deleteHamster(hamster.getServerId(), new Callback<Void>() {
             @Override
@@ -59,6 +55,12 @@ public class HamsterApiInteractor {
     }
 
     public void sync() {
+        getAllHamters();
+    }
+
+
+    @Override
+    public void getAllHamters() {
 
         hamsterService.getAllHamstersObs().map(new Func1<List<Hamster>, List<Hamster>>() {
             @Override
@@ -90,39 +92,18 @@ public class HamsterApiInteractor {
                 bus.post(new OnHamstersSyncedEvent());
             }
         });
-
-        /*hamsterService.getAllHamsters(new Callback<List<Hamster>>() {
-            @Override
-            public void success(List<Hamster> hamsters, Response response) {
-
-                Map<String, Hamster> idMap = new HashMap<String, Hamster>();
-                for (Hamster h : hamsters) {
-                    idMap.put(h.getServerId(), h);
-                }
-                for (Hamster h : hamsters) {
-                    h.setMother(idMap.get(h.getMotherServerId()));
-                    h.setFather(idMap.get(h.getFatherServerId()));
-                    h.save();
-                }
-                bus.post(new OnHamstersSyncedEvent());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });*/
     }
 
-    public String uploadImage(Hamster hamster, byte[] bitmap) {
-        return hamsterService.uploadImage(hamster.getServerId(), new TypedByteArray("image/jpeg", bitmap));
+    @Override
+    public Hamster storeHamster(Hamster hamster) {
+        return hamsterService.addHamster(hamster);
     }
 
-    public String uploadImage(Hamster hamster, String path) {
+    @Override
+    public String saveHamsterImage(Hamster hamster, String path) {
         File f = new File(path);
-        String s = hamsterService.uploadImage(hamster.getServerId(), new TypedFile("image/jpeg", f));
+        String serverImageId = hamsterService.uploadImage(hamster.getServerId(), new TypedFile("image/jpeg", f));
         f.delete();
-        return s;
+        return serverImageId;
     }
-
 }

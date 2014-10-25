@@ -1,13 +1,8 @@
 package ch.furrylittlefriends.hamsterhelper.jobs;
 
-import com.activeandroid.query.Delete;
-import com.path.android.jobqueue.Job;
-import com.path.android.jobqueue.Params;
-
 import javax.inject.Inject;
 
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
-import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
 
 /**
  * Created by fork on 04.10.14.
@@ -15,7 +10,7 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 public class HamsterSyncJob extends BaseNetworkedJob {
 
     @Inject
-    HamsterApiInteractor hamsterApiInteractor;
+    HamsterCloudRepository hamsterApiInteractor;
 
     public HamsterSyncJob() {
 

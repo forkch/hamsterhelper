@@ -5,7 +5,7 @@ import com.squareup.otto.Bus;
 import javax.inject.Inject;
 
 import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
 /**
@@ -15,7 +15,7 @@ public class DeleteHamsterJob extends BaseNetworkedJob {
 
     private final Hamster hamsterToBeDeleted;
     @Inject
-    HamsterApiInteractor hamsterApiInteractor;
+    HamsterCloudRepository hamsterApiInteractor;
     @Inject
     Bus bus;
 

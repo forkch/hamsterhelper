@@ -1,18 +1,10 @@
 package ch.furrylittlefriends.hamsterhelper.ui.viewhamster;
 
-import android.util.Log;
-import android.widget.ImageView;
-
 import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
-import com.squareup.picasso.Picasso;
 
-import org.apache.commons.lang3.StringUtils;
-
-import ch.furrylittlefriends.hamsterhelper.BuildConfig;
-import ch.furrylittlefriends.hamsterhelper.R;
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterApiInteractor;
-import ch.furrylittlefriends.hamsterhelper.interactors.HamsterOfflineIteractor;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterDatabaseRepository;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.util.HamsterImageHelper;
 
@@ -21,12 +13,12 @@ import ch.furrylittlefriends.hamsterhelper.util.HamsterImageHelper;
  */
 public class ViewHamsterPresenter {
     private final ViewHamsterActivity view;
-    private final HamsterOfflineIteractor hamsterOfflineIteractor;
-    private final HamsterApiInteractor hamsterListInteractor;
+    private final HamsterDatabaseRepository hamsterOfflineIteractor;
+    private final HamsterCloudRepository hamsterListInteractor;
     private final Bus bus;
     private final JobManager jobManager;
 
-    public ViewHamsterPresenter(ViewHamsterActivity view, HamsterOfflineIteractor hamsterOfflineIteractor, HamsterApiInteractor hamsterListInteractor, Bus bus, JobManager jobManager) {
+    public ViewHamsterPresenter(ViewHamsterActivity view, HamsterDatabaseRepository hamsterOfflineIteractor, HamsterCloudRepository hamsterListInteractor, Bus bus, JobManager jobManager) {
 
         this.view = view;
         this.hamsterOfflineIteractor = hamsterOfflineIteractor;
