@@ -6,7 +6,7 @@ import android.os.Looper;
 import com.squareup.otto.Bus;
 
 /**
- * Created by fork on 27.09.14.
+ * Created with love by fork on 27.09.14.
  */
 public class MainThreadBus extends Bus {
     private final Handler mainThread = new Handler(Looper.getMainLooper());

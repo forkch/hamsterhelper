@@ -3,7 +3,7 @@ package ch.furrylittlefriends.hamsterhelper.ui;
 import ch.furrylittlefriends.hamsterhelper.HamsterHelperApplication;
 
 /**
- * Created by fork on 19.09.14.
+ * Created with love by fork on 19.09.14.
  */
 public interface HamsterActivity {
 

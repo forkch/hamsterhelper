@@ -6,14 +6,8 @@ public class ViewIdGenerator {
 
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
-    /**
-     * Generate a value suitable for use in {@link #setId(int)}.
-     * This value will not collide with ID values generated at build time by aapt for R.id.
-     *
-     * @return a generated ID value
-     */
     public static int generateViewId() {
-        for (;;) {
+        for (; ; ) {
             final int result = sNextGeneratedId.get();
             // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
             int newValue = result + 1;

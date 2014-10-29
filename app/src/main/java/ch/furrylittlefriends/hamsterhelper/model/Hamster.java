@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by fork on 30.08.14.
+ * Created with love by fork on 30.08.14.
  */
 @Table(name = "Hamsters")
 public class Hamster extends Model implements Serializable, Comparable<Hamster> {
@@ -61,13 +61,13 @@ public class Hamster extends Model implements Serializable, Comparable<Hamster> 
     @Column(name = "image")
     private String image;
 
-    @Column(name="mother")
+    @Column(name = "mother")
     private Hamster mother;
 
-    @Column(name="father")
+    @Column(name = "father")
     private Hamster father;
 
-    @Column(name="tempImageUri")
+    @Column(name = "tempImageUri")
     private String tempImageUri;
 
     // This method is optional, does not affect the foreign key creation.

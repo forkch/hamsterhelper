@@ -5,51 +5,46 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="@drawable/dialog_background">
+
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small"
+        android:textSize="20sp"
+        tools:text="dialog_title" />
+
+    <View
+        android:id="@+id/dialog_title_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
     <LinearLayout
+        android:id="@+id/dialog_content"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/dialog_background">
+        android:layout_margin="@dimen/margin_small">
 
         <TextView
-            android:id="@+id/dialog_title"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            android:textSize="20sp"
-           tools:text="dialog_title" />
-
-        <View
-            android:id="@+id/dialog_title_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:id="@+id/dialog_message"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            tools:text="dialog_message" />
 
         <LinearLayout
-            android:id="@+id/dialog_content"
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/dialog_message"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_small"
-                tools:text="dialog_message"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/dialog_button_panel"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="@dimen/margin_small"></LinearLayout>
-
-        </LinearLayout>
+            android:id="@+id/dialog_button_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="@dimen/margin_small" />
 
     </LinearLayout>
+
 
 </LinearLayout>

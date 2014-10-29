@@ -14,7 +14,7 @@ import ch.furrylittlefriends.hamsterhelper.ui.HamsterActivity;
 
 
 /**
- * Created by fork on 30.05.14.
+ * Created with love by fork on 30.05.14.
  */
 public abstract class BaseActivity extends Activity implements HamsterActivity {
 
@@ -50,6 +50,6 @@ public abstract class BaseActivity extends Activity implements HamsterActivity {
 
     @Override
     public HamsterHelperApplication getMyApplication() {
-        return ((HamsterHelperApplication)getApplication());
+        return ((HamsterHelperApplication) getApplication());
     }
 }

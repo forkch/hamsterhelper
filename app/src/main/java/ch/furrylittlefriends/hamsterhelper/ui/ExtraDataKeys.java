@@ -1,7 +1,7 @@
 package ch.furrylittlefriends.hamsterhelper.ui;
 
 /**
- * Created by fork on 05.10.14.
+ * Created with love by fork on 05.10.14.
  */
 public class ExtraDataKeys {
 

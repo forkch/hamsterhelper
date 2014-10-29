@@ -1,7 +1,5 @@
 package ch.furrylittlefriends.hamsterhelper.util;
 
-import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
@@ -16,11 +14,12 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.ui.ActivityWithHamsterImage;
 
 /**
- * Created by fork on 09.10.14.
+ * Created with love by fork on 09.10.14.
  */
 public class HamsterImageHelper {
 
     private static final String TAG = HamsterImageHelper.class.getSimpleName();
+
     public static void setHamsterImage(Context context, ActivityWithHamsterImage activity, Hamster hamster) {
         setHamsterImage(context, activity.getImageView(), hamster);
     }
@@ -33,6 +32,7 @@ public class HamsterImageHelper {
         } else if (StringUtils.isNotBlank(hamster.getImage())) {
             String imageUrl = "";
             Log.i(TAG, "" + BuildConfig.IS_S3);
+            //noinspection PointlessBooleanExpression,ConstantConditions
             if (!BuildConfig.IS_S3) {
                 imageUrl = BuildConfig.ENDPOINT + "api/hamsters/" + hamster.getServerId() + "/image/" + hamster.getImage();
             } else {

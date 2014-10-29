@@ -2,7 +2,6 @@ package ch.furrylittlefriends.hamsterhelper.ui.addhamster;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +25,7 @@ import icepick.Icepick;
 import icepick.Icicle;
 
 /**
- * Created by fork on 08.10.14.
+ * Created with love by fork on 08.10.14.
  */
 public class SelectHamsterImagePresenter {
     private static final String TAG = SelectHamsterImagePresenter.class.getSimpleName();
@@ -46,6 +45,7 @@ public class SelectHamsterImagePresenter {
 
         this.view = view;
     }
+
     public void selectPicture() {
 
         SimpleDialog.DialogBuilder dialogBuilder = new SimpleDialog.DialogBuilder(view, view.getFragmentManager());
@@ -122,9 +122,9 @@ public class SelectHamsterImagePresenter {
         Log.i(TAG, "URI of image: " + mImageCaptureUri.toString());
         String scheme = mImageCaptureUri.getScheme();
         String type = "";
-        if(StringUtils.contains(scheme, "content")) {
+        if (StringUtils.contains(scheme, "content")) {
             type = view.getContentResolver().getType(mImageCaptureUri);
-        }else {
+        } else {
             MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
             type = mimeTypeMap.getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(mImageCaptureUri.toString().toLowerCase()));
         }

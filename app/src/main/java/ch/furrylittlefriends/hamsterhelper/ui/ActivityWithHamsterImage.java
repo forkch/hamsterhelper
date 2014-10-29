@@ -3,8 +3,8 @@ package ch.furrylittlefriends.hamsterhelper.ui;
 import android.widget.ImageView;
 
 /**
- * Created by fork on 09.10.14.
+ * Created with love by fork on 09.10.14.
  */
-public interface ActivityWithHamsterImage  {
+public interface ActivityWithHamsterImage {
     ImageView getImageView();
 }

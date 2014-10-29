@@ -16,12 +16,12 @@ import retrofit.mime.TypedFile;
 import rx.Observable;
 
 /**
- * Created by fork on 30.08.14.
+ * Created with love by fork on 30.08.14.
  */
 public interface HamsterService {
 
     @GET("/api/hamsters")
-    public void getAllHamsters(Callback<List<Hamster>> cb );
+    public void getAllHamsters(Callback<List<Hamster>> cb);
 
     @GET("/api/hamsters")
     public Observable<List<Hamster>> getAllHamstersObs();
@@ -33,14 +33,14 @@ public interface HamsterService {
     @POST("/api/hamsters")
     public Hamster addHamster(@Body Hamster hamster);
 
-    @DELETE("/api/hamsters/{id}" )
+    @DELETE("/api/hamsters/{id}")
     public void deleteHamster(@Path("id") String id, Callback<Void> cb);
 
     @Multipart
     @POST("/api/hamsters/{id}/image")
-    public String uploadImage(@Path("id") String serverId, @Part("image")TypedByteArray image);
+    public String uploadImage(@Path("id") String serverId, @Part("image") TypedByteArray image);
 
     @Multipart
     @POST("/api/hamsters/{id}/image")
-    public String uploadImage(@Path("id") String serverId, @Part("image")TypedFile image);
+    public String uploadImage(@Path("id") String serverId, @Part("image") TypedFile image);
 }

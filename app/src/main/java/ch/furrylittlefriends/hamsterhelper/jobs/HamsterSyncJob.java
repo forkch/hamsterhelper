@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
 
 /**
- * Created by fork on 04.10.14.
+ * Created with love by fork on 04.10.14.
  */
 public class HamsterSyncJob extends BaseNetworkedJob {
 

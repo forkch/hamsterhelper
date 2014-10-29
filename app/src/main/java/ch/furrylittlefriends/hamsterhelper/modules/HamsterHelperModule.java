@@ -1,6 +1,5 @@
 package ch.furrylittlefriends.hamsterhelper.modules;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.fatboyindustrial.gsonjodatime.Converters;
@@ -12,8 +11,6 @@ import com.path.android.jobqueue.config.Configuration;
 import com.path.android.jobqueue.di.DependencyInjector;
 import com.path.android.jobqueue.log.CustomLogger;
 import com.squareup.otto.Bus;
-
-import org.joda.time.DateTime;
 
 import javax.inject.Singleton;
 
@@ -31,9 +28,8 @@ import retrofit.android.AndroidLog;
 import retrofit.converter.GsonConverter;
 
 /**
- * Created by fork on 30.05.14.
+ * Created with love by fork on 30.05.14.
  */
-
 @Module(
         injects = {HamsterHelperApplication.class,
                 SettingsActivity.class,
@@ -46,12 +42,10 @@ import retrofit.converter.GsonConverter;
 )
 public class HamsterHelperModule {
 
-    private final Context context;
-    private HamsterHelperApplication hamsterHelperApplication;
+    private final HamsterHelperApplication hamsterHelperApplication;
 
     public HamsterHelperModule(HamsterHelperApplication hamsterHelperApplication) {
         this.hamsterHelperApplication = hamsterHelperApplication;
-        this.context = hamsterHelperApplication.getApplicationContext();
     }
 
     @Provides
@@ -68,12 +62,11 @@ public class HamsterHelperModule {
     @Provides
     @Singleton
     public JobManager providesJobManager() {
-        JobManager jobManager = new JobManager(hamsterHelperApplication, configureJobManager());
-        return jobManager;
+        return new JobManager(hamsterHelperApplication, configureJobManager());
     }
 
     private Configuration configureJobManager() {
-        Configuration configuration = new Configuration.Builder(hamsterHelperApplication)
+        return new Configuration.Builder(hamsterHelperApplication)
                 .customLogger(new CustomLogger() {
                     private static final String TAG = "JOBS";
 
@@ -109,7 +102,6 @@ public class HamsterHelperModule {
                     }
                 })
                 .build();
-        return configuration;
 
     }
 
@@ -121,16 +113,14 @@ public class HamsterHelperModule {
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithoutExposeAnnotation();
         Gson gson = Converters.registerAll(builder).create();
-        String s = gson.toJson(new DateTime());
         GsonConverter converter = new GsonConverter(gson);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
+        return new RestAdapter.Builder()
                 .setConverter(converter)
                 .setEndpoint(BuildConfig.ENDPOINT)
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setLog(new AndroidLog("REST: "))
                 .build();
-        return restAdapter;
     }
 
 }

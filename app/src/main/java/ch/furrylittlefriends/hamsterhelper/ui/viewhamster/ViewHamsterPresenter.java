@@ -3,13 +3,13 @@ package ch.furrylittlefriends.hamsterhelper.ui.viewhamster;
 import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
 
+import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
 import ch.furrylittlefriends.hamsterhelper.repository.HamsterDatabaseRepository;
-import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.util.HamsterImageHelper;
 
 /**
- * Created by fork on 09.10.14.
+ * Created with love by fork on 09.10.14.
  */
 public class ViewHamsterPresenter {
     private final ViewHamsterActivity view;

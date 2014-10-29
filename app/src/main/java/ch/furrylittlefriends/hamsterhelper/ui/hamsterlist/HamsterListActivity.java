@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,9 +21,9 @@ import butterknife.OnClick;
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.modules.HamsterListModule;
-import ch.furrylittlefriends.hamsterhelper.ui.base.BaseListActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.SettingsActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
+import ch.furrylittlefriends.hamsterhelper.ui.base.BaseListActivity;
 
 public class HamsterListActivity extends BaseListActivity implements SwipeRefreshLayout.OnRefreshListener {
 

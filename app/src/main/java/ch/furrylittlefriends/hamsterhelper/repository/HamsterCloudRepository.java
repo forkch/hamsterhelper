@@ -19,13 +19,12 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedFile;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
- * Created by fork on 01.09.14.
+ * Created with love by fork on 01.09.14.
  */
 public class HamsterCloudRepository implements HamsterRepository {
 

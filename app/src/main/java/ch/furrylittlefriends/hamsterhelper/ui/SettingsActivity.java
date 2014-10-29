@@ -13,7 +13,7 @@ import ch.furrylittlefriends.hamsterhelper.HamsterHelperApplication;
 import ch.furrylittlefriends.hamsterhelper.R;
 
 /**
- * Created by fork on 4/24/14.
+ * Created with love by fork on 4/24/14.
  */
 public class SettingsActivity extends PreferenceActivity {
 

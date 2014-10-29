@@ -63,7 +63,7 @@ public class SimpleDialog extends DialogFragment {
         private final Context context;
         private final FragmentManager fragmentManager;
 
-        private Builder builder;
+        private final Builder builder;
 
         public DialogBuilder(Context context, FragmentManager fragmentManager) {
             this.context = context;
@@ -140,7 +140,7 @@ public class SimpleDialog extends DialogFragment {
         private CharSequence title = null;
         private CharSequence message = null;
 
-        private List<ButtonConfig> buttonConfigs;
+        private final List<ButtonConfig> buttonConfigs;
 
         protected Builder() {
             this.buttonConfigs = new ArrayList<ButtonConfig>();
@@ -237,9 +237,9 @@ public class SimpleDialog extends DialogFragment {
 
     private static class ButtonConfig implements Serializable {
 
-        int layout;
-        CharSequence text;
-        transient View.OnClickListener listener; //note: can be null if serialized, which results in dismissing simple_dialog without any action
+        final int layout;
+        final CharSequence text;
+        final transient View.OnClickListener listener; //note: can be null if serialized, which results in dismissing simple_dialog without any action
 
         public ButtonConfig(CharSequence text, View.OnClickListener listener, int layout) {
             this.text = text;

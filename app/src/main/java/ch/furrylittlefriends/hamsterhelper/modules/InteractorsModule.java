@@ -11,9 +11,9 @@ import dagger.Provides;
 import retrofit.RestAdapter;
 
 /**
- * Created by fork on 27.09.14.
+ * Created with love by fork on 27.09.14.
  */
-@Module(complete=false,library = true)
+@Module(complete = false, library = true)
 public class InteractorsModule {
 
     @Provides

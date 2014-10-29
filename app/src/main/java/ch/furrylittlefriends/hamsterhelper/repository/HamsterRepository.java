@@ -3,7 +3,7 @@ package ch.furrylittlefriends.hamsterhelper.repository;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
 /**
- * Created by fork on 12.10.14.
+ * Created with love by fork on 12.10.14.
  */
 public interface HamsterRepository {
 

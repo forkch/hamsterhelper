@@ -2,7 +2,6 @@ package ch.furrylittlefriends.hamsterhelper.ui.hamsterlist;
 
 import android.app.ListActivity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,27 +10,23 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
-import ch.furrylittlefriends.hamsterhelper.BuildConfig;
 import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.util.HamsterImageHelper;
 
 /**
- * Created by fork on 30.08.14.
+ * Created with love by fork on 30.08.14.
  */
 public class HamsterListAdapter extends ArrayAdapter<Hamster> {
 
     private static final String TAG = HamsterListAdapter.class.getSimpleName();
-    private ListActivity context;
+    private final ListActivity context;
     private final HamsterListRowListener hamsterListRowListener;
     private final DateTimeFormatter dateTimeFormatter;
 
@@ -92,7 +87,6 @@ public class HamsterListAdapter extends ArrayAdapter<Hamster> {
         });
         return rowView;
     }
-
 
 
     public interface HamsterListRowListener {

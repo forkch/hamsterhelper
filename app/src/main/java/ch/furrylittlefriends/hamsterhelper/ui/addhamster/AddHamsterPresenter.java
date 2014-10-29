@@ -29,14 +29,13 @@ import icepick.Icepick;
 import icepick.Icicle;
 
 /**
- * Created by fork on 25.09.14.
+ * Created with love by fork on 25.09.14.
  */
 public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener {//, NumberPickerDialogFragment.NumberPickerDialogHandler {
     private static final String TAG = AddHamsterPresenter.class.getSimpleName();
-    private AddHamsterActivity view;
+    private final AddHamsterActivity view;
     private final HamsterDatabaseRepository hamsterOfflineIteractor;
-    private HamsterCloudRepository hamsterApiInteractor;
-    private Bus bus;
+    private final Bus bus;
     private final JobManager jobManager;
 
 
@@ -50,7 +49,6 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener {
     public AddHamsterPresenter(AddHamsterActivity view, HamsterDatabaseRepository hamsterOfflineIteractor, HamsterCloudRepository hamsterApiInteractor, Bus bus, JobManager jobManager) {
         this.view = view;
         this.hamsterOfflineIteractor = hamsterOfflineIteractor;
-        this.hamsterApiInteractor = hamsterApiInteractor;
         this.bus = bus;
         this.jobManager = jobManager;
         selectHamsterImagePresenter = new SelectHamsterImagePresenter(view);
@@ -173,6 +171,6 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener {
     }
 
     public void processResult(int requestCode, int resultCode, Intent data) {
-        selectHamsterImagePresenter.processResult(requestCode,resultCode,data);
+        selectHamsterImagePresenter.processResult(requestCode, resultCode, data);
     }
 }

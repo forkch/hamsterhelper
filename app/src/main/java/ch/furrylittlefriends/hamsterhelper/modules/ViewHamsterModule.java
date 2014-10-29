@@ -13,12 +13,12 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by fork on 25.09.14.
+ * Created with love by fork on 25.09.14.
  */
 @Module(injects = ViewHamsterActivity.class,
         addsTo = HamsterHelperModule.class)
 public class ViewHamsterModule {
-    private ViewHamsterActivity view;
+    private final ViewHamsterActivity view;
 
     public ViewHamsterModule(ViewHamsterActivity view) {
         this.view = view;

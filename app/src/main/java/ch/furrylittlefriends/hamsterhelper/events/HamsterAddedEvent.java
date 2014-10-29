@@ -3,10 +3,10 @@ package ch.furrylittlefriends.hamsterhelper.events;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
 /**
- * Created by fork on 27.09.14.
+ * Created with love by fork on 27.09.14.
  */
 public class HamsterAddedEvent {
-    private Hamster hamster;
+    private final Hamster hamster;
     private final boolean syncedWithServer;
 
     public HamsterAddedEvent(Hamster hamster, boolean syncedWithServer) {

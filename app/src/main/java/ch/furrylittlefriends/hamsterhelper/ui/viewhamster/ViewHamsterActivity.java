@@ -18,9 +18,8 @@ import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.modules.ViewHamsterModule;
 import ch.furrylittlefriends.hamsterhelper.ui.ActivityWithHamsterImage;
-import ch.furrylittlefriends.hamsterhelper.ui.base.BaseActivity;
-import ch.furrylittlefriends.hamsterhelper.ui.base.BaseFragmentActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.ExtraDataKeys;
+import ch.furrylittlefriends.hamsterhelper.ui.base.BaseFragmentActivity;
 
 public class ViewHamsterActivity extends BaseFragmentActivity implements ActivityWithHamsterImage {
 

@@ -23,7 +23,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/hamster_image"/>
+                android:src="@drawable/hamster_image" />
 
             <TextView
                 android:id="@+id/hamsterName"
@@ -72,7 +72,7 @@
                 android:background="@android:drawable/ic_menu_edit"
                 android:id="@+id/editHamsterButton"
                 android:layout_weight="0"
-                android:layout_gravity="right"/>
+                android:layout_gravity="end" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -80,8 +80,9 @@
                 android:background="@android:drawable/ic_menu_delete"
                 android:id="@+id/deleteHamsterButton"
                 android:layout_weight="0"
-                android:layout_gravity="right"
-                android:layout_marginLeft="8dp"/>
+                android:layout_gravity="end"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp" />
 
         </LinearLayout>
     </LinearLayout>

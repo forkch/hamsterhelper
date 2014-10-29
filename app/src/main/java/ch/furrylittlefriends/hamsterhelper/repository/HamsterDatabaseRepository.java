@@ -12,7 +12,7 @@ import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 
 /**
- * Created by fork on 05.10.14.
+ * Created with love by fork on 05.10.14.
  */
 public class HamsterDatabaseRepository implements HamsterRepository {
 

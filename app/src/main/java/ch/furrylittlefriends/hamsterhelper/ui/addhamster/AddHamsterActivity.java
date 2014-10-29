@@ -35,6 +35,7 @@ import ch.furrylittlefriends.hamsterhelper.modules.AddHamsterModule;
 import ch.furrylittlefriends.hamsterhelper.ui.base.BaseFragmentActivity;
 import icepick.Icepick;
 
+@SuppressWarnings("WeakerAccess")
 public class AddHamsterActivity extends BaseFragmentActivity {
 
     private static final String TAG = AddHamsterActivity.class.getSimpleName();

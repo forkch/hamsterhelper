@@ -5,7 +5,7 @@ import com.activeandroid.serializer.TypeSerializer;
 import org.joda.time.DateTime;
 
 /**
- * Created by fork on 04.10.14.
+ * Created with love by fork on 04.10.14.
  */
 public class DateTimeDbSerializer extends TypeSerializer {
     @Override

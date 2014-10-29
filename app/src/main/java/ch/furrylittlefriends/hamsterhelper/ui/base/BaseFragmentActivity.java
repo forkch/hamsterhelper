@@ -1,24 +1,20 @@
 package ch.furrylittlefriends.hamsterhelper.ui.base;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.bugsnag.android.Bugsnag;
 import com.squareup.otto.Bus;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import ch.furrylittlefriends.hamsterhelper.BuildConfig;
 import ch.furrylittlefriends.hamsterhelper.HamsterHelperApplication;
-import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.ui.HamsterActivity;
 
 
 /**
- * Created by fork on 30.05.14.
+ * Created with love by fork on 30.05.14.
  */
 public abstract class BaseFragmentActivity extends FragmentActivity implements HamsterActivity {
 
@@ -55,7 +51,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements H
 
     @Override
     public HamsterHelperApplication getMyApplication() {
-        return ((HamsterHelperApplication)getApplication());
+        return ((HamsterHelperApplication) getApplication());
     }
 
 

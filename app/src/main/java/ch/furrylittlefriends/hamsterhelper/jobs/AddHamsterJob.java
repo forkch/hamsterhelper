@@ -6,15 +6,16 @@ import com.squareup.otto.Bus;
 import javax.inject.Inject;
 
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
-import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
 
 /**
- * Created by fork on 04.10.14.
+ * Created with love by fork on 04.10.14.
  */
+@SuppressWarnings("WeakerAccess")
 public class AddHamsterJob extends BaseNetworkedJob {
 
-    private Hamster hamsterToBeAdded;
+    private final Hamster hamsterToBeAdded;
     private final String fileDescriptor;
 
     @Inject
@@ -27,7 +28,7 @@ public class AddHamsterJob extends BaseNetworkedJob {
         this.hamsterToBeAdded = hamsterToBeAdded;
         this.fileDescriptor = path;
     }
-    
+
     @Override
     public void onAdded() {
         bus.post(new HamsterAddedEvent(hamsterToBeAdded, false));

@@ -16,24 +16,24 @@ import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterDeletedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersSyncedEvent;
-import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
-import ch.furrylittlefriends.hamsterhelper.repository.HamsterDatabaseRepository;
 import ch.furrylittlefriends.hamsterhelper.jobs.DeleteHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.jobs.HamsterSyncJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterDatabaseRepository;
 import ch.furrylittlefriends.hamsterhelper.ui.ExtraDataKeys;
 import ch.furrylittlefriends.hamsterhelper.ui.viewhamster.ViewHamsterActivity;
 import ch.furrylittlefriends.hamsterhelper.util.NetworkHelper;
 
 /**
- * Created by fork on 01.09.14.
+ * Created with love by fork on 01.09.14.
  */
 public class HamsterListPresenter implements HamsterListAdapter.HamsterListRowListener {
     private static String TAG = HamsterListPresenter.class.getSimpleName();
-    private HamsterListActivity view;
+    private final HamsterListActivity view;
     private final HamsterDatabaseRepository hamsterOfflineIteractor;
-    private HamsterCloudRepository hamsterApiInteractor;
-    private Bus bus;
+    private final HamsterCloudRepository hamsterApiInteractor;
+    private final Bus bus;
     private final JobManager jobManager;
     private final HamsterListAdapter hamsterListAdapter;
 
