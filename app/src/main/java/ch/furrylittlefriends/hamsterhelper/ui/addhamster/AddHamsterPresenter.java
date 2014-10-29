@@ -3,10 +3,7 @@ package ch.furrylittlefriends.hamsterhelper.ui.addhamster;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 
-import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
-import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.path.android.jobqueue.JobManager;
 import com.squareup.otto.Bus;
@@ -22,20 +19,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import ch.furrylittlefriends.hamsterhelper.R;
 import ch.furrylittlefriends.hamsterhelper.events.HamsterAddedEvent;
 import ch.furrylittlefriends.hamsterhelper.events.OnHamstersLoadedEvent;
-import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
-import ch.furrylittlefriends.hamsterhelper.repository.HamsterDatabaseRepository;
 import ch.furrylittlefriends.hamsterhelper.jobs.AddHamsterJob;
 import ch.furrylittlefriends.hamsterhelper.model.Hamster;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterCloudRepository;
+import ch.furrylittlefriends.hamsterhelper.repository.HamsterDatabaseRepository;
 import icepick.Icepick;
 import icepick.Icicle;
 
 /**
  * Created by fork on 25.09.14.
  */
-public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, NumberPickerDialogFragment.NumberPickerDialogHandler {
+public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener {//, NumberPickerDialogFragment.NumberPickerDialogHandler {
     private static final String TAG = AddHamsterPresenter.class.getSimpleName();
     private AddHamsterActivity view;
     private final HamsterDatabaseRepository hamsterOfflineIteractor;
@@ -85,16 +81,16 @@ public class AddHamsterPresenter implements DatePickerDialog.OnDateSetListener, 
 
 
     public void showWeightPicker() {
-        NumberPickerBuilder npb = new NumberPickerBuilder()
+    /*    NumberPickerBuilder npb = new NumberPickerBuilder()
                 .setFragmentManager(view.getSupportFragmentManager())
                 .addNumberPickerDialogHandler(this)
                 .setStyleResId(R.style.BetterPickersDialogFragment)
                 .setPlusMinusVisibility(View.INVISIBLE)
                 .setLabelText(view.getString(R.string.weight_unit));
-        npb.show();
+        npb.show();*/
     }
 
-    @Override
+    //@Override
     public void onDialogNumberSet(int reference, int number, double decimal, boolean isNegative, double fullNumber) {
         this.weight = fullNumber;
         view.setWeightText(weight);

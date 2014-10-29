@@ -139,7 +139,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/default_divider_color_light"
+        android:background="@color/dividerLight_openSource"
         android:layout_marginTop="12dp" />
 
     <LinearLayout
@@ -159,7 +159,7 @@
         <ImageView
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/default_divider_color_light"
+            android:background="@color/dividerLight_openSource"
             android:layout_margin="@dimen/margin_small" />
 
         <Button
