@@ -2,7 +2,7 @@ language: android
 script: "./gradlew clean assembleDevelopmentHerokuDebug"
 android:
   components:
-  - build-tools-20.0.0
+  - build-tools-21.0.2
 android_toolkit: 
 deploy:
   provider: s3
