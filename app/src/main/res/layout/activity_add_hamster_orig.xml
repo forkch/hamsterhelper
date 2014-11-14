@@ -2,34 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding">
 
-    <include layout="@layout/toolbar" />
-
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="200dp"
-            android:adjustViewBounds="true"
-            tools:src="@drawable/hamster_image"
-            android:id="@+id/hamsterImage" />
-
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/addPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginTop="150dp"
-            android:src="@android:drawable/ic_menu_camera"
-            fab:fab_colorNormal="@color/color_primary"
-            fab:fab_colorPressed="@color/color_secondary" />
-    </FrameLayout>
 
     <EditText
         android:layout_width="match_parent"
@@ -39,17 +14,16 @@
         android:id="@+id/hamsterName"
         android:hint="@string/hint_name"
         android:singleLine="true"
-        android:layout_marginStart="@dimen/margin_small"
+        android:padding="5dp"
         android:textSize="@dimen/large_textsize" />
 
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginStart="@dimen/margin_small">
+        android:layout_weight="1">
 
-    <TableRow>
+        <TableRow>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -166,7 +140,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_accent"
+        android:background="@color/dividerLight_openSource"
         android:layout_marginTop="12dp" />
 
     <LinearLayout
@@ -186,7 +160,7 @@
         <ImageView
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/color_accent"
+            android:background="@color/dividerLight_openSource"
             android:layout_margin="@dimen/margin_small" />
 
         <Button

@@ -42,8 +42,7 @@
         <activity
             android:name=".ui.addhamster.AddHamsterActivity"
             android:label=""
-            android:parentActivityName=".ui.hamsterlist.HamsterListActivity"
-            android:theme="@style/AppTheme.TranslucentActionBar.ActionBar.Overlay">
+            android:parentActivityName=".ui.hamsterlist.HamsterListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.furrylittlefriends.hamsterhelper.activities.HamsterListActivity" />
@@ -51,8 +50,7 @@
         <activity
             android:name=".ui.viewhamster.ViewHamsterActivity"
             android:label="@string/title_activity_view_hamster"
-            android:parentActivityName=".ui.hamsterlist.HamsterListActivity"
-            android:theme="@style/AppTheme.TranslucentActionBar.ActionBar.Overlay">
+            android:parentActivityName=".ui.hamsterlist.HamsterListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.furrylittlefriends.hamsterhelper.activities.HamsterListActivity" />

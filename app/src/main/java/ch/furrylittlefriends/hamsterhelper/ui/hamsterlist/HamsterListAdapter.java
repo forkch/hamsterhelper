@@ -1,6 +1,6 @@
 package ch.furrylittlefriends.hamsterhelper.ui.hamsterlist;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,12 +26,12 @@ import ch.furrylittlefriends.hamsterhelper.util.HamsterImageHelper;
 public class HamsterListAdapter extends ArrayAdapter<Hamster> {
 
     private static final String TAG = HamsterListAdapter.class.getSimpleName();
-    private final ListActivity context;
+    private final Activity context;
     private final HamsterListRowListener hamsterListRowListener;
     private final DateTimeFormatter dateTimeFormatter;
 
 
-    public HamsterListAdapter(ListActivity context, List<Hamster> hamsterList, HamsterListRowListener hamsterListRowListener) {
+    public HamsterListAdapter(Activity context, List<Hamster> hamsterList, HamsterListRowListener hamsterListRowListener) {
         super(context, R.layout.hamster_list_row, hamsterList);
         this.context = context;
         this.hamsterListRowListener = hamsterListRowListener;

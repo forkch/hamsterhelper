@@ -45,12 +45,13 @@ public class HamsterListPresenter implements HamsterListAdapter.HamsterListRowLi
         this.jobManager = jobManager;
         hamsterListAdapter =
                 new HamsterListAdapter(view, new ArrayList<Hamster>(), this);
-        view.setListAdapter(hamsterListAdapter);
+
     }
 
 
     public void onResume() {
         bus.register(this);
+        view.setListAdapter(hamsterListAdapter);
     }
 
     public void onPause() {

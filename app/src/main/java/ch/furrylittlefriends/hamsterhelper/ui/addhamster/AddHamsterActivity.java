@@ -13,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
@@ -73,13 +72,7 @@ public class AddHamsterActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FadingActionBarHelper helper = new FadingActionBarHelper()
-                .actionBarBackground(R.color.add_hamster_picture_button_color)
-                .headerLayout(R.layout.header_hamster_image)
-                .contentLayout(R.layout.activity_add_hamster)
-                .headerOverlayLayout(R.layout.add_picture_overlay);
-        setContentView(helper.createView(this));
-        helper.initActionBar(this);
+        setContentView(R.layout.activity_add_hamster);
 
 
         getMyApplication().createScopedGraphAndInject(this, new AddHamsterModule(this));

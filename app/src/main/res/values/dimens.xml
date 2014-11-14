@@ -3,5 +3,5 @@
     <dimen name="large_textsize">24sp</dimen>
     <dimen name="medium_textsize">18sp</dimen>
     <dimen name="layout_padding">12dp</dimen>
-    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
 </resources>

@@ -26,6 +26,7 @@ public abstract class BaseActivity extends Activity implements HamsterActivity {
         super.onCreate(savedInstanceState);
         Bugsnag.register(this, BuildConfig.BUGSNAG_API_KEY);
         Bugsnag.onActivityCreate(this);
+
     }
 
     @Override

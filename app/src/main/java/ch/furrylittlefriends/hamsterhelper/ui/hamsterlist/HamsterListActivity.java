@@ -23,9 +23,9 @@ import ch.furrylittlefriends.hamsterhelper.model.Hamster;
 import ch.furrylittlefriends.hamsterhelper.modules.HamsterListModule;
 import ch.furrylittlefriends.hamsterhelper.ui.SettingsActivity;
 import ch.furrylittlefriends.hamsterhelper.ui.addhamster.AddHamsterActivity;
-import ch.furrylittlefriends.hamsterhelper.ui.base.BaseListActivity;
+import ch.furrylittlefriends.hamsterhelper.ui.base.BaseActivity;
 
-public class HamsterListActivity extends BaseListActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class HamsterListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = HamsterListActivity.class.getSimpleName();
 
@@ -119,4 +119,7 @@ public class HamsterListActivity extends BaseListActivity implements SwipeRefres
         Toast.makeText(this, getString(R.string.error_delete_hamster_with_children, hamster.getName()), Toast.LENGTH_SHORT).show();
     }
 
+    public void setListAdapter(HamsterListAdapter hamsterListAdapter) {
+        listView.setAdapter(hamsterListAdapter);
+    }
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <com.melnykov.fab.FloatingActionButton
@@ -10,6 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:src="@android:drawable/ic_menu_camera"
-        fab:fab_colorNormal="@color/add_hamster_picture_button_color"
-        fab:fab_colorPressed="@color/add_hamster_picture_button_color_light" />
+        fab:fab_colorNormal="@color/color_primary"
+        fab:fab_colorPressed="@color/color_secondary" />
 </FrameLayout>

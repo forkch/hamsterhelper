@@ -38,13 +38,13 @@ android {
 
     productFlavors {
         developmentLocal {
-            versionName "1.0.0-SNAPSTHOT"
+            versionName "1.0.0-SNAPSHOT"
             buildConfigField "String", "ENDPOINT", "\"http://192.168.56.1:9000/\""
             buildConfigField "boolean", "IS_S3", "false"
             buildConfigField "String", "HAMSTER_IMAGE_ENDPOINT_S3", "\"https://s3.amazonaws.com/hamsterhelper-dev-hamster-images/\""
         }
         developmentHeroku {
-            versionName "1.0.0-SNAPSTHOT"
+            versionName "1.0.0-SNAPSHOT"
             buildConfigField "String", "ENDPOINT", "\"http://hamsterhelper-dev.herokuapp.com/\""
             buildConfigField "boolean", "IS_S3", "true"
             buildConfigField "String", "HAMSTER_IMAGE_ENDPOINT_S3", "\"https://s3.amazonaws.com/hamsterhelper-dev-hamster-images/\""

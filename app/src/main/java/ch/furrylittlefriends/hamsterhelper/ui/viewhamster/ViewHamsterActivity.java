@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -34,12 +33,7 @@ public class ViewHamsterActivity extends BaseFragmentActivity implements Activit
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FadingActionBarHelper helper = new FadingActionBarHelper()
-                .actionBarBackground(R.color.add_hamster_picture_button_color)
-                .headerLayout(R.layout.header_hamster_image)
-                .contentLayout(R.layout.activity_view_hamster);
-        setContentView(helper.createView(this));
-        helper.initActionBar(this);
+        setContentView(R.layout.activity_view_hamster);
 
         getMyApplication().createScopedGraphAndInject(this, new ViewHamsterModule(this));
         ButterKnife.inject(this);
